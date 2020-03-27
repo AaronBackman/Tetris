@@ -2,7 +2,8 @@ package gamelogic;
 
 import java.util.Random;
 
-public class palikkaTehdas {
+public class PalikkaTehdas {
+
     public Palikka teeSatunnainenPalikka(Ruudukko ruudukko) {
         Random r = new Random();
         int n = r.nextInt(7);

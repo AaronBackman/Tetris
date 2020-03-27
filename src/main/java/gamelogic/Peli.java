@@ -13,14 +13,14 @@ public class Peli {
 
     public void aloitaPeli() throws InterruptedException {
         long aikavali = 1;
-        this.putoavaPalikka = new palikkaTehdas().teeSatunnainenPalikka(pelinTila);
+        this.putoavaPalikka = new PalikkaTehdas().teeSatunnainenPalikka(pelinTila);
         int count = 0;
-        while(count < 10) {
+        while(count < 100) {
             Thread.sleep(1000);
             putoavaPalikka.pudotaYksiRuutu();
             pelinTila.tulostaRuudukko();
             if(! putoavaPalikka.onkoPutoamassa) {
-                putoavaPalikka = new palikkaTehdas().teeSatunnainenPalikka(pelinTila);
+                putoavaPalikka = new PalikkaTehdas().teeSatunnainenPalikka(pelinTila);
                 pelinTila.tulostaRuudukko();
             }
             count++;

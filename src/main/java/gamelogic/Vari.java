@@ -1,0 +1,5 @@
+package gamelogic;
+
+public enum Vari {
+    HARMAA, TURKOOSI, SININEN, ORANSSI, KELTAINEN, VIHREA, VIOLETTI, PUNAINEN
+}

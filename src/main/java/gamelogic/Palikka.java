@@ -1,22 +1,11 @@
 package gamelogic;
 
 public class Palikka {
-    //vari 3 bittisena binaarilukuna
-    protected final int vari;
     protected Ruudukko ruudukko;
-    protected  int[][] kaantoAlue;  //alue jossa palikkaa kaannetaan
+    protected  Ruutu[][] kaantoAlue;  //alue jossa palikkaa kaannetaan
     protected int[] sijainti; //kaantoAlueen indeksin[0][0] sijainti koko laudalla alkaen vasemmasta ylakulmasta
-    protected final int taytettyRuutu; //taytetty (ja putoava koska on palikka)
-    protected final int tyhjaRuutu;
-    protected boolean onkoPutoamassa;
+    protected boolean onkoPutoamassa = true;
 
-    protected Palikka(int vari, Ruudukko ruudukko) {
-        this.vari = vari;
-        this.taytettyRuutu = 0b11000 | vari;
-        this.tyhjaRuutu = 0b01000 | vari;
-        this.ruudukko = ruudukko;
-        this.onkoPutoamassa = true;
-    }
     public void pudotaYksiRuutu() {
         sijainti[1] += 1;
         if(ruudukko.voikoPaivittaa(sijainti, kaantoAlue)) {
@@ -50,7 +39,7 @@ public class Palikka {
     }
 
     public void kaannaMyotapaivaan() {
-        int[][] kaannetytRuudut = new int[kaantoAlue.length][kaantoAlue.length];
+        Ruutu[][] kaannetytRuudut = new Ruutu[kaantoAlue.length][kaantoAlue.length];
         for (int i = 0; i < kaantoAlue.length; i++) {
             for (int j = 0; j < kaantoAlue.length; j++) {
                 kaannetytRuudut[i][j] = kaantoAlue[kaantoAlue.length - 1 - j][i];
@@ -62,7 +51,7 @@ public class Palikka {
     }
 
     public void kaannaVastapaivaan() {
-        int[][] kaannetytRuudut = new int[kaantoAlue.length][kaantoAlue.length];
+        Ruutu[][] kaannetytRuudut = new Ruutu[kaantoAlue.length][kaantoAlue.length];
         for (int i = 0; i < kaantoAlue.length; i++) {
             for (int j = 0; j < kaantoAlue.length; j++) {
                 kaannetytRuudut[kaantoAlue.length - 1 - j][i] = kaantoAlue[i][j];
