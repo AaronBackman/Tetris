@@ -7,8 +7,8 @@ public class Opalikka extends Palikka {
         int O = tyhjaRuutu;
         this.kaantoAlue = new int[][] {{I,I}, {I,I}};
         this.sijainti = new int[2];
-        sijainti[0] = 4;
-        sijainti[0] = 1;
+        sijainti[0] = 8;
+        sijainti[1] = 1;
     }
 
     public void kaanna() {
