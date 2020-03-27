@@ -28,10 +28,13 @@ public class Ruudukko {
         int y = sijainti[1];
         RuutuTehdas ruutuTehdas = new RuutuTehdas();
         for(int i=-1; i<palikkaAlue.length; i++) {
-            for(int j=0; j<palikkaAlue.length; j++) {
+            for(int j=-1; j<palikkaAlue.length+1; j++) {
 
-                //tarkistaa onko palikkaAlueen paalle jaanyt osa palikkaa ja poistaa ne osat
-                if(y != 0 && i == -1) {
+                //tarkistaa onko palikkaAlueen ulkopuolelle jaanyt osa palikkaa ja poistaa ne osat
+                if(i == -1 | j == -1 | j == palikkaAlue.length) {
+                    if(y == 0) {
+                        continue;
+                    }
                     if (ruudut[x + j][y + i].annaPutoaminen()) {
                         ruudut[x + j][y + i] = ruutuTehdas.teeTyhjaRuutu();
                     }

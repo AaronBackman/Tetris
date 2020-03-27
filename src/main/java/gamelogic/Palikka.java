@@ -3,7 +3,7 @@ package gamelogic;
 public class Palikka {
     protected Ruudukko ruudukko;
     protected  Ruutu[][] kaantoAlue;  //alue jossa palikkaa kaannetaan
-    protected int[] sijainti; //kaantoAlueen indeksin[0][0] sijainti koko laudalla alkaen vasemmasta ylakulmasta
+    protected int[] sijainti; //kaantoAlueen indeksin[0][0] sijainti koko laudalla alkaen vasemmasta ylakulmasta,x,y
     protected boolean onkoPutoamassa = true;
 
     public void pudotaYksiRuutu() {
@@ -42,11 +42,12 @@ public class Palikka {
         Ruutu[][] kaannetytRuudut = new Ruutu[kaantoAlue.length][kaantoAlue.length];
         for (int i = 0; i < kaantoAlue.length; i++) {
             for (int j = 0; j < kaantoAlue.length; j++) {
-                kaannetytRuudut[i][j] = kaantoAlue[kaantoAlue.length - 1 - j][i];
+                kaannetytRuudut[j][i] = kaantoAlue[kaantoAlue.length - 1 - i][j];
             }
         }
         if(ruudukko.voikoPaivittaa(sijainti, kaannetytRuudut)) {
             kaantoAlue = kaannetytRuudut;
+            ruudukko.paivitaRuudukko(sijainti, kaantoAlue);
         }
     }
 
@@ -54,11 +55,12 @@ public class Palikka {
         Ruutu[][] kaannetytRuudut = new Ruutu[kaantoAlue.length][kaantoAlue.length];
         for (int i = 0; i < kaantoAlue.length; i++) {
             for (int j = 0; j < kaantoAlue.length; j++) {
-                kaannetytRuudut[kaantoAlue.length - 1 - j][i] = kaantoAlue[i][j];
+                kaannetytRuudut[kaantoAlue.length - 1 - i][j] = kaantoAlue[j][i];
             }
         }
         if(ruudukko.voikoPaivittaa(sijainti, kaannetytRuudut)) {
             kaantoAlue = kaannetytRuudut;
+            ruudukko.paivitaRuudukko(sijainti, kaantoAlue);
         }
     }
 
