@@ -38,7 +38,7 @@ public class Palikka {
         }
     }
 
-    public void kaannaMyotapaivaan() {
+    public void kaannaVastapaivaan() {
         Ruutu[][] kaannetytRuudut = new Ruutu[kaantoAlue.length][kaantoAlue.length];
         for (int i = 0; i < kaantoAlue.length; i++) {
             for (int j = 0; j < kaantoAlue.length; j++) {
@@ -51,7 +51,7 @@ public class Palikka {
         }
     }
 
-    public void kaannaVastapaivaan() {
+    public void kaannaMyotapaivaan() {
         Ruutu[][] kaannetytRuudut = new Ruutu[kaantoAlue.length][kaantoAlue.length];
         for (int i = 0; i < kaantoAlue.length; i++) {
             for (int j = 0; j < kaantoAlue.length; j++) {
