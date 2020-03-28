@@ -91,4 +91,8 @@ public class Ruudukko {
         }
         System.out.println("__________");
     }
+
+    public Ruutu[][] annaRuudut() {
+        return ruudut;
+    }
 }
