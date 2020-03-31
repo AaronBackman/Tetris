@@ -35,7 +35,6 @@ public class Peli {
         } else if (input.equals("e")) {
             putoavaPalikka.kaannaMyotapaivaan();
         }
-        sc.close();
     }
 
     public void seuraavaFrame() {
