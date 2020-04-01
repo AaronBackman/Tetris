@@ -39,26 +39,41 @@ public class TetrisGrafiikat extends Application {
         GridPane napit = new GridPane();
         Button vasenNappi = new Button();
         vasenNappi.setText("<");
-        vasenNappi.setOnAction(new VasenNappi(this, ikkuna, peli));
+        vasenNappi.setOnAction(e -> {
+            peli.otaInputti("vasen");
+            this.piirra(ikkuna, peli);
+        });
 
         Button oikeaNappi = new Button();
         oikeaNappi.setText(">");
-        oikeaNappi.setOnAction(new OikeaNappi(this, ikkuna, peli));
+        oikeaNappi.setOnAction(e -> {
+            peli.otaInputti("oikea");
+            this.piirra(ikkuna, peli);
+        });
 
         Button valiLyonti = new Button();
         valiLyonti.setText("  ");
 
         Button alasNappi = new Button();
         alasNappi.setText("V");
-        alasNappi.setOnAction(new AlasNappi(this, ikkuna, peli));
+        alasNappi.setOnAction(e -> {
+            peli.otaInputti("alas");
+            this.piirra(ikkuna, peli);
+        });
 
         Button vastaPaivaanNappi = new Button();
         vastaPaivaanNappi.setText("\\");
-        vastaPaivaanNappi.setOnAction(new VastaPaivaanNappi(this, ikkuna, peli));
+        vastaPaivaanNappi.setOnAction(e -> {
+            peli.otaInputti("vastaPaivaan");
+            this.piirra(ikkuna, peli);
+        });
 
         Button myotaPaivaanNappi = new Button();
         myotaPaivaanNappi.setText("/");
-        myotaPaivaanNappi.setOnAction(new MyotaPaivaanNappi(this, ikkuna, peli));
+        myotaPaivaanNappi.setOnAction(e -> {
+            peli.otaInputti("myotaPaivaan");
+            this.piirra(ikkuna, peli);
+        });
 
         napit.add(vastaPaivaanNappi, 0, 0);
         napit.add(myotaPaivaanNappi, 2, 0);
