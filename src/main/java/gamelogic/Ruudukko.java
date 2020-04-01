@@ -5,15 +5,19 @@ public class Ruudukko {
     //toinen putoamista ja loput vareja
 
     //10x22 kaksi ylinta rivia palikoiden luomiseen, +4 ruutua vasemmalle, oikealle ja alas = 18x26
-    Ruutu[][] ruudut;
+    private Ruutu[][] ruudut;
+    private final static int REUNA_ALUE = 4;
+    private final static int SIJOITUS_ALUE = 2;
+    private final static int KORKEUS = 20;
+    private final static int LEVEYS = 10;
 
     public Ruudukko() {
         //vasemmalla, oikealla ja alhaalla on 4 ylimaaraista ruutua joita kaytetaan reunan ylityksen tarkistamiseen
-        this.ruudut = new Ruutu[18][26];
+        this.ruudut = new Ruutu[LEVEYS + 2 * REUNA_ALUE][KORKEUS + SIJOITUS_ALUE + REUNA_ALUE];
         RuutuTehdas ruutuTehdas = new RuutuTehdas();
         for(int i=0; i<ruudut[0].length; i++) {
             for(int j=0; j<ruudut.length; j++) {
-                if((i < ruudut[0].length - 4) && (j >= 4) && (j <ruudut.length - 4)) {
+                if((i < ruudut[0].length - REUNA_ALUE) && (j >= REUNA_ALUE) && (j <ruudut.length - REUNA_ALUE)) {
                     ruudut[j][i] = ruutuTehdas.teeTyhjaRuutu();
                 }
                 else {
@@ -47,6 +51,51 @@ public class Ruudukko {
             }
         }
     }
+
+    public int poistaTaydetRuudut() {
+        int pisteet = 0;
+
+        for(int i=0; i<KORKEUS; i++) {
+            int taydetRuudutRivilla = 0;
+
+            for(int j=0; j<LEVEYS; j++) {
+                if(ruudut[j + REUNA_ALUE][i + SIJOITUS_ALUE].onkoTaynna()) {
+                    taydetRuudutRivilla += 1;
+                }
+            }
+            if(taydetRuudutRivilla == LEVEYS) {
+                pudotaRiville(i);
+                pisteet += 1;
+            }
+        }
+        return  pisteet;
+    }
+
+    private void pudotaRiville(int rivi) {
+        poistaRivi(rivi);
+
+        RuutuTehdas rt = new RuutuTehdas();
+
+        for(int i = rivi+SIJOITUS_ALUE-1; i>=0; i--) {
+            for(int j=0; j<LEVEYS; j++) {
+                if(ruudut[j + REUNA_ALUE][i].onkoTaynna()) {
+                    //pudottaa palikan yhden ruudun alaspain, joka on tyhja koska rivi poistetaan/pudotetaan ensin
+                    ruudut[j + REUNA_ALUE][i + 1] = ruudut[j + REUNA_ALUE][i];
+
+                    //poistaa palikan, jotta siihen voidaan pudottaa palikka myohemmin
+                    ruudut[j + REUNA_ALUE][i] = rt.teeTyhjaRuutu();
+                }
+            }
+        }
+    }
+
+    private void poistaRivi(int rivi) {
+        for(int i=0; i<LEVEYS; i++) {
+            RuutuTehdas rt = new RuutuTehdas();
+            ruudut[i + REUNA_ALUE][rivi + SIJOITUS_ALUE] = rt.teeTyhjaRuutu();
+        }
+    }
+
     public void asetaPalikkaPudonneeksi(int[] sijainti, Ruutu[][] palikkaAlue) {
         int x = sijainti[0];
         int y = sijainti[1];
@@ -66,7 +115,7 @@ public class Ruudukko {
 
         for(int i=0; i<palikkaAlue.length; i++) {
             for(int j=0; j<palikkaAlue[0].length; j++) {
-                if(y + j >= 2) {
+                if(y + j >= SIJOITUS_ALUE) {
                     return false;
                 }
                 else if(ruudut[x + j][y + i].onkoTaynna()) {

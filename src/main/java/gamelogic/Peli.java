@@ -8,6 +8,7 @@ public class Peli {
     private Ruudukko pelinTila;
     private Palikka putoavaPalikka;
     private boolean peliKaynnissa;
+    private int pisteet;
 
     public Peli() {
         this.pelinTila = new Ruudukko();
@@ -38,6 +39,8 @@ public class Peli {
             if(annaRuudukko().onkoPalikkaRuudunUlkopuolella(putoavaPalikka.annaSijainti(), putoavaPalikka.annaKaantoAlue())) {
                 this.peliKaynnissa = false;
             }
+
+            pisteet += pelinTila.poistaTaydetRuudut();
 
             putoavaPalikka = new PalikkaTehdas().teeSatunnainenPalikka(pelinTila);
         }
