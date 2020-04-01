@@ -60,6 +60,26 @@ public class Ruudukko {
         }
     }
 
+    public boolean onkoPalikkaRuudunUlkopuolella(int[] sijainti, Ruutu[][] palikkaAlue) {
+        int x = sijainti[0];
+        int y = sijainti[1];
+
+        for(int i=0; i<palikkaAlue.length; i++) {
+            for(int j=0; j<palikkaAlue[0].length; j++) {
+                if(y + j >= 2) {
+                    return false;
+                }
+                else if(ruudut[x + j][y + i].onkoTaynna()) {
+                    //ruudukon ylapuolella on palikka ylempana olevan ehdon perusteella
+                    return true;
+                }
+            }
+        }
+        //ei tapahdu koskaan, mutta kaantaja vaatii returnin
+        return false;
+
+    }
+
     public boolean voikoPaivittaa(int[] sijainti, Ruutu[][] palikkaAlue) {
         int x = sijainti[0];
         int y = sijainti[1];
@@ -74,22 +94,6 @@ public class Ruudukko {
             }
         }
         return true;
-    }
-
-    public void tulostaRuudukko() {
-        //huom. reunaruudut
-        for(int i=2; i<ruudut[0].length - 4; i++) {
-            for(int j=4; j<ruudut.length - 4; j++) {
-                if(ruudut[j][i].onkoTaynna()) {
-                    System.out.print("H");
-                }
-                else {
-                    System.out.print("O");
-                }
-            }
-            System.out.println();
-        }
-        System.out.println("__________");
     }
 
     public Ruutu[][] annaRuudut() {

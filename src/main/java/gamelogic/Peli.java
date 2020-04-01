@@ -35,11 +35,10 @@ public class Peli {
         if(! putoavaPalikka.onkoPutoamassa) {
 
             //tarkistaa onko pudonnut palikka ruudun ulkopuolella (==peli havitty)
-            if(putoavaPalikka.sijainti[1] == 0) {
-                //TODO lisaa tarkistus onko laudan ulkopuolella todella palikan osia
-                //TODO poista kokonaiset palikkarivit
-                peliKaynnissa = false;
+            if(annaRuudukko().onkoPalikkaRuudunUlkopuolella(putoavaPalikka.annaSijainti(), putoavaPalikka.annaKaantoAlue())) {
+                this.peliKaynnissa = false;
             }
+
             putoavaPalikka = new PalikkaTehdas().teeSatunnainenPalikka(pelinTila);
         }
     }

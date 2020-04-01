@@ -71,4 +71,12 @@ public class Palikka {
     public void asetaRuudukko(Ruudukko ruudukko) {
         this.ruudukko = ruudukko;
     }
+
+    public int[] annaSijainti() {
+        return sijainti;
+    }
+
+    public Ruutu[][] annaKaantoAlue() {
+        return kaantoAlue;
+    }
 }
