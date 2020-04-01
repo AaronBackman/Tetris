@@ -1,8 +1,11 @@
 package grafiikat;
 
 import gamelogic.Peli;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class TetrisGrafiikat extends Application {
 
@@ -22,16 +26,26 @@ public class TetrisGrafiikat extends Application {
     @Override
     public void start(Stage ikkuna) {
         Peli peli = new Peli();
-        if (peli.onkoPeliKaynnissa()) {
-            peli.seuraavaFrame();
+        Timeline ajastin = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (peli.onkoPeliKaynnissa()) {
+                    peli.seuraavaFrame();
 
-            piirra(ikkuna, peli);
-            //TODO timeri TimeLine luokalla(?)
-        }
+                    piirra(ikkuna, peli);
+                }
 
-        if (peli.onkoPeliKaynnissa() == false) {
-            System.out.println("havisit pelin");
-        }
+                if (peli.onkoPeliKaynnissa() == false) {
+                    try {
+                        stop();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }));
+        ajastin.setCycleCount(Timeline.INDEFINITE);
+        ajastin.play();
     }
 
     public void piirra(Stage ikkuna, Peli peli) {

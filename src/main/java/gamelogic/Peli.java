@@ -38,7 +38,6 @@ public class Peli {
             if(putoavaPalikka.sijainti[1] == 0) {
                 //TODO lisaa tarkistus onko laudan ulkopuolella todella palikan osia
                 //TODO poista kokonaiset palikkarivit
-                System.out.println("havisit pelin");
                 peliKaynnissa = false;
             }
             putoavaPalikka = new PalikkaTehdas().teeSatunnainenPalikka(pelinTila);
