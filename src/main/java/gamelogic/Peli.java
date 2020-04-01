@@ -15,24 +15,17 @@ public class Peli {
         this.peliKaynnissa = true;
     }
 
-    public void otaInputti() {
+    public void otaInputti(String input) {
 
-        Scanner sc = new Scanner(System.in);
-        String input = "";
-
-        if(sc.hasNextLine()) {
-            input = sc.nextLine();
-        }
-
-        if (input.equals("a")) {
+        if (input.equals("vasen")) {
             putoavaPalikka.liikuVasemmalle();
-        } else if (input.equals("d")) {
+        } else if (input.equals("oikea")) {
             putoavaPalikka.liikuOikealle();
-        } else if (input.equals("s")) {
+        } else if (input.equals("alas")) {
             putoavaPalikka.pudotaYksiRuutu();
-        } else if (input.equals("q")) {
+        } else if (input.equals("vastaPaivaan")) {
             putoavaPalikka.kaannaVastapaivaan();
-        } else if (input.equals("e")) {
+        } else if (input.equals("myotaPaivaan")) {
             putoavaPalikka.kaannaMyotapaivaan();
         }
     }
