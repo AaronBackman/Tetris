@@ -13,6 +13,8 @@ import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -25,6 +27,40 @@ public class TetrisGrafiikat extends Application {
     }
     @Override
     public void start(Stage ikkuna) {
+        ikkuna.setTitle("Tetris Limited Edition");
+
+        piirraPaaValikko(ikkuna);
+    }
+
+    private void piirraPaaValikko(Stage ikkuna) {
+        Label otsikko = new Label("TETRIS");
+        otsikko.setPrefSize(150, 50);
+        otsikko.setStyle("-fx-font: 40 arial;");
+
+        HBox ylaRivi = new HBox();
+        ylaRivi.getChildren().add(otsikko);
+        ylaRivi.setAlignment(Pos.CENTER);
+        BorderPane.setMargin(ylaRivi, new Insets(30, 30, 30, 30));
+
+        Button siirryPeliin = new Button("Aloita Peli");
+        siirryPeliin.setOnAction(e -> {
+            peliIkkuna(ikkuna);
+        });
+        VBox valikko = new VBox();
+        valikko.setAlignment(Pos.CENTER);
+
+        valikko.getChildren().add(siirryPeliin);
+
+        BorderPane root = new BorderPane();
+        root.setCenter(valikko);
+        root.setTop(ylaRivi);
+
+
+        ikkuna.setScene(new Scene(root, 600, 600));
+        ikkuna.show();
+    }
+
+    private void peliIkkuna(Stage ikkuna) {
         Peli peli = new Peli();
         Timeline ajastin = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
             @Override
@@ -32,7 +68,7 @@ public class TetrisGrafiikat extends Application {
                 if (peli.onkoPeliKaynnissa()) {
                     peli.seuraavaFrame();
 
-                    piirra(ikkuna, peli);
+                    piirraPeli(ikkuna, peli);
                 }
 
                 if (peli.onkoPeliKaynnissa() == false) {
@@ -48,21 +84,22 @@ public class TetrisGrafiikat extends Application {
         ajastin.play();
     }
 
-    public void piirra(Stage ikkuna, Peli peli) {
+    private void piirraPeli(Stage ikkuna, Peli peli) {
 
         GridPane napit = new GridPane();
+
         Button vasenNappi = new Button();
         vasenNappi.setText("<");
         vasenNappi.setOnAction(e -> {
             peli.otaInputti("vasen");
-            this.piirra(ikkuna, peli);
+            this.piirraPeli(ikkuna, peli);
         });
 
         Button oikeaNappi = new Button();
         oikeaNappi.setText(">");
         oikeaNappi.setOnAction(e -> {
             peli.otaInputti("oikea");
-            this.piirra(ikkuna, peli);
+            this.piirraPeli(ikkuna, peli);
         });
 
         Button valiLyonti = new Button();
@@ -72,21 +109,21 @@ public class TetrisGrafiikat extends Application {
         alasNappi.setText("V");
         alasNappi.setOnAction(e -> {
             peli.otaInputti("alas");
-            this.piirra(ikkuna, peli);
+            this.piirraPeli(ikkuna, peli);
         });
 
         Button vastaPaivaanNappi = new Button();
         vastaPaivaanNappi.setText("\\");
         vastaPaivaanNappi.setOnAction(e -> {
             peli.otaInputti("vastaPaivaan");
-            this.piirra(ikkuna, peli);
+            this.piirraPeli(ikkuna, peli);
         });
 
         Button myotaPaivaanNappi = new Button();
         myotaPaivaanNappi.setText("/");
         myotaPaivaanNappi.setOnAction(e -> {
             peli.otaInputti("myotaPaivaan");
-            this.piirra(ikkuna, peli);
+            this.piirraPeli(ikkuna, peli);
         });
 
         napit.add(vastaPaivaanNappi, 0, 0);
@@ -110,7 +147,7 @@ public class TetrisGrafiikat extends Application {
         for (int rivi = 0; rivi < korkeus; rivi++) {
             for (int sarake = 0; sarake < leveys; sarake++) {
                 StackPane ruutu = new StackPane();
-                ruutu.setMaxSize(30, 40);
+                ruutu.setMaxSize(30, 30);
 
                 String vari = peli.annaRuudukko().annaRuudut()[sarake + 4][rivi + 2].annaVariMerkkijonona();
 
@@ -125,14 +162,19 @@ public class TetrisGrafiikat extends Application {
         }
         ruudukko.prefHeight(250);
         ruudukko.prefWidth(500);
+        ruudukko.setAlignment(Pos.CENTER);
 
         napit.setAlignment(Pos.BOTTOM_RIGHT);
 
-        HBox root = new HBox();
+        String pisteet = String.valueOf(peli.annaPisteet());
+        TextField pisteTaulu = new TextField(pisteet);
+
+        BorderPane root = new BorderPane();
         root.setPadding(new Insets(10, 10, 10, 10));
 
-        root.getChildren().addAll(ruudukko, napit);
-        root.setHgrow(ruudukko, Priority.ALWAYS);
+        root.setRight(napit);
+        root.setCenter(ruudukko);
+        root.setTop(pisteTaulu);
 
         ikkuna.setScene(new Scene(root, 600, 600));
         ikkuna.show();

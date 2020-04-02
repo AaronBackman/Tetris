@@ -53,4 +53,8 @@ public class Peli {
     public boolean onkoPeliKaynnissa() {
         return peliKaynnissa;
     }
+
+    public int annaPisteet() {
+        return pisteet;
+    }
 }
