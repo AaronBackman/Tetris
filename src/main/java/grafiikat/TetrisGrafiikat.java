@@ -144,6 +144,9 @@ public class TetrisGrafiikat extends Application {
                     case E:
                         peli.otaInputti("myotaPaivaan");
                         break;
+                    case SPACE:
+                        peli.otaInputti("pudotaAlasAsti");
+                        break;
                     default:
                         break;
 

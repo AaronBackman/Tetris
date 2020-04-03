@@ -29,6 +29,9 @@ public class Peli {
         } else if (input.equals("myotaPaivaan")) {
             putoavaPalikka.kaannaMyotapaivaan();
         }
+        else if (input.equals("pudotaAlasAsti")) {
+            putoavaPalikka.pudotaNiinPaljonKuinMahdollista();
+        }
     }
 
     public void seuraavaFrame() {

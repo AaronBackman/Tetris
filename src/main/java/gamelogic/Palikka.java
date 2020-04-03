@@ -18,6 +18,13 @@ public class Palikka {
         }
     }
 
+    public void pudotaNiinPaljonKuinMahdollista() {
+        //pudottaa kunnes putoaa alas asti
+        while(onkoPutoamassa) {
+            pudotaYksiRuutu();
+        }
+    }
+
     public void liikuVasemmalle() {
         sijainti[0] -= 1;
         if(ruudukko.voikoPaivittaa(sijainti, kaantoAlue)) {
