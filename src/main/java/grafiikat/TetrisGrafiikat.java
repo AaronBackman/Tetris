@@ -16,13 +16,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class TetrisGrafiikat extends Application {
-
+    private static boolean tauko = false;
+    private static Peli peli = new Peli();
 
     public static void main(String[] args) {
         launch(args);
@@ -44,8 +46,10 @@ public class TetrisGrafiikat extends Application {
         ylaRivi.setAlignment(Pos.CENTER);
         BorderPane.setMargin(ylaRivi, new Insets(30, 30, 30, 30));
 
+        //aloittaa uuden pelin
         Button siirryPeliin = new Button("Aloita Peli");
         siirryPeliin.setOnAction(e -> {
+            peli = new Peli();
             peliIkkuna(ikkuna);
         });
         VBox valikko = new VBox();
@@ -63,23 +67,27 @@ public class TetrisGrafiikat extends Application {
     }
 
     private void peliIkkuna(Stage ikkuna) {
-        Peli peli = new Peli();
-        Timeline ajastin = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+        //millisekunteina
+        final double kierroksenKesto = 1000;
+        Timeline ajastin = new Timeline(new KeyFrame(Duration.millis(kierroksenKesto), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (peli.onkoPeliKaynnissa()) {
-                    peli.seuraavaFrame();
+                if (tauko == false) {
+                    if (peli.onkoPeliKaynnissa()) {
+                        peli.seuraavaFrame();
 
-                    piirraPeli(ikkuna, peli);
-                }
-
-                if (peli.onkoPeliKaynnissa() == false) {
-                    try {
-                        System.out.println("peli on ohi");
-                        stop();
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                        piirraPeli(ikkuna);
                     }
+
+                    if (peli.onkoPeliKaynnissa() == false) {
+                        try {
+                            stop();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } else {
+                    taukoValikko(ikkuna);
                 }
             }
         }));
@@ -87,7 +95,7 @@ public class TetrisGrafiikat extends Application {
         ajastin.play();
     }
 
-    private void piirraPeli(Stage ikkuna, Peli peli) {
+    private void piirraPeli(Stage ikkuna) {
 
         GridPane ruudukko = new GridPane();
         ruudukko.setHgap(5);
@@ -117,11 +125,20 @@ public class TetrisGrafiikat extends Application {
         String pisteet = String.valueOf(peli.annaPisteet());
         Label pisteTaulu = new Label("PISTEET: " + pisteet);
 
+        Button taukoNappi = new Button("PAUSSI");
+        taukoNappi.setFocusTraversable(false);
+        BorderPane.setAlignment(taukoNappi, Pos.BOTTOM_RIGHT);
+        taukoNappi.setOnAction(e -> {
+            tauko = true;
+            taukoValikko(ikkuna);
+        });
+
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(10, 10, 10, 10));
 
         root.setCenter(ruudukko);
         root.setTop(pisteTaulu);
+        root.setRight(taukoNappi);
 
         ikkuna.setScene(new Scene(root, 600, 600));
         ikkuna.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -150,10 +167,24 @@ public class TetrisGrafiikat extends Application {
                         break;
 
                 }
-                piirraPeli(ikkuna, peli);
+
+                piirraPeli(ikkuna);
             }
         });
 
+        ikkuna.show();
+    }
+
+    private void taukoValikko(Stage ikkuna) {
+        Button jatkaNappula = new Button("Jatka Pelia");
+        jatkaNappula.setOnAction(e -> {
+            tauko = false;
+        });
+
+        BorderPane root = new BorderPane();
+        root.setCenter(jatkaNappula);
+
+        ikkuna.setScene(new Scene(root, 600, 600));
         ikkuna.show();
     }
 }
