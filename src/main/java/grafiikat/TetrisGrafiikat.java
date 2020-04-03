@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -86,56 +87,6 @@ public class TetrisGrafiikat extends Application {
 
     private void piirraPeli(Stage ikkuna, Peli peli) {
 
-        GridPane napit = new GridPane();
-
-        Button vasenNappi = new Button();
-        vasenNappi.setText("<");
-        vasenNappi.setOnAction(e -> {
-            peli.otaInputti("vasen");
-            this.piirraPeli(ikkuna, peli);
-        });
-
-        Button oikeaNappi = new Button();
-        oikeaNappi.setText(">");
-        oikeaNappi.setOnAction(e -> {
-            peli.otaInputti("oikea");
-            this.piirraPeli(ikkuna, peli);
-        });
-
-        Button valiLyonti = new Button();
-        valiLyonti.setText("  ");
-
-        Button alasNappi = new Button();
-        alasNappi.setText("V");
-        alasNappi.setOnAction(e -> {
-            peli.otaInputti("alas");
-            this.piirraPeli(ikkuna, peli);
-        });
-
-        Button vastaPaivaanNappi = new Button();
-        vastaPaivaanNappi.setText("\\");
-        vastaPaivaanNappi.setOnAction(e -> {
-            peli.otaInputti("vastaPaivaan");
-            this.piirraPeli(ikkuna, peli);
-        });
-
-        Button myotaPaivaanNappi = new Button();
-        myotaPaivaanNappi.setText("/");
-        myotaPaivaanNappi.setOnAction(e -> {
-            peli.otaInputti("myotaPaivaan");
-            this.piirraPeli(ikkuna, peli);
-        });
-
-        napit.add(vastaPaivaanNappi, 0, 0);
-        napit.add(myotaPaivaanNappi, 2, 0);
-        napit.add(vasenNappi, 0, 1);
-        napit.add(alasNappi, 1, 1);
-        napit.add(oikeaNappi, 2, 1);
-        napit.add(valiLyonti, 1, 2);
-
-        napit.setPrefHeight(50);
-        napit.setPrefWidth(100);
-
         GridPane ruudukko = new GridPane();
         ruudukko.setHgap(5);
         ruudukko.setVgap(5);
@@ -164,19 +115,43 @@ public class TetrisGrafiikat extends Application {
         ruudukko.prefWidth(500);
         ruudukko.setAlignment(Pos.CENTER);
 
-        napit.setAlignment(Pos.BOTTOM_RIGHT);
-
         String pisteet = String.valueOf(peli.annaPisteet());
-        TextField pisteTaulu = new TextField(pisteet);
+        Label pisteTaulu = new Label("PISTEET: " + pisteet);
 
         BorderPane root = new BorderPane();
         root.setPadding(new Insets(10, 10, 10, 10));
 
-        root.setRight(napit);
         root.setCenter(ruudukko);
         root.setTop(pisteTaulu);
 
         ikkuna.setScene(new Scene(root, 600, 600));
+        ikkuna.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent tapahtuma) {
+                switch(tapahtuma.getCode()) {
+                    case A:
+                        peli.otaInputti("vasen");
+                        break;
+                    case S:
+                        peli.otaInputti("alas");
+                        break;
+                    case D:
+                        peli.otaInputti("oikea");
+                        break;
+                    case Q:
+                        peli.otaInputti("vastaPaivaan");
+                        break;
+                    case E:
+                        peli.otaInputti("myotaPaivaan");
+                        break;
+                    default:
+                        break;
+
+                }
+                piirraPeli(ikkuna, peli);
+            }
+        });
+
         ikkuna.show();
     }
 }
