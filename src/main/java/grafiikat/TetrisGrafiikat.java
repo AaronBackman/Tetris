@@ -1,6 +1,7 @@
 package grafiikat;
 
 import gamelogic.Peli;
+import gamelogic.Ruudukko;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -74,6 +75,7 @@ public class TetrisGrafiikat extends Application {
 
                 if (peli.onkoPeliKaynnissa() == false) {
                     try {
+                        System.out.println("peli on ohi");
                         stop();
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -92,22 +94,19 @@ public class TetrisGrafiikat extends Application {
         ruudukko.setVgap(5);
         ruudukko.setPadding(new Insets(10, 10, 10, 10));
 
-        final int korkeus = 20;
-        final int leveys = 10;
-
-        for (int rivi = 0; rivi < korkeus; rivi++) {
-            for (int sarake = 0; sarake < leveys; sarake++) {
+        for (int rivi = 0; rivi < Ruudukko.KORKEUS; rivi++) {
+            for (int sarake = 0; sarake < Ruudukko.LEVEYS; sarake++) {
                 StackPane ruutu = new StackPane();
                 ruutu.setMaxSize(30, 30);
 
-                String vari = peli.annaRuudukko().annaRuudut()[sarake + 4][rivi + 2].annaVariMerkkijonona();
+                String vari = peli.annaRuudukko().annaRuudut()[sarake + Ruudukko.REUNA_ALUE][rivi + Ruudukko.SIJOITUS_ALUE].annaVariMerkkijonona();
 
 
                 ruutu.setStyle("-fx-background-color: " + vari + ";");
                 ruudukko.add(ruutu, sarake, rivi);
             }
         }
-        for (int i = 0; i < korkeus; i++) {
+        for (int i = 0; i < Ruudukko.KORKEUS; i++) {
             ruudukko.getColumnConstraints().add(new ColumnConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true));
             ruudukko.getRowConstraints().add(new RowConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, VPos.CENTER, true));
         }

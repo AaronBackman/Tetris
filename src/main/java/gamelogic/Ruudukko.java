@@ -6,10 +6,10 @@ public class Ruudukko {
 
     //10x22 kaksi ylinta rivia palikoiden luomiseen, +4 ruutua vasemmalle, oikealle ja alas = 18x26
     private Ruutu[][] ruudut;
-    private final static int REUNA_ALUE = 4;
-    private final static int SIJOITUS_ALUE = 2;
-    private final static int KORKEUS = 20;
-    private final static int LEVEYS = 10;
+    public final static int REUNA_ALUE = 4;
+    public final static int SIJOITUS_ALUE = 2;
+    public final static int KORKEUS = 20;
+    public final static int LEVEYS = 10;
 
     public Ruudukko() {
         //vasemmalla, oikealla ja alhaalla on 4 ylimaaraista ruutua joita kaytetaan reunan ylityksen tarkistamiseen
@@ -36,7 +36,9 @@ public class Ruudukko {
 
                 //tarkistaa onko palikkaAlueen ulkopuolelle jaanyt osa palikkaa ja poistaa ne osat
                 if(i == -1 | j == -1 | j == palikkaAlue.length) {
-                    if(y == 0) {
+
+                    //palikka on niin ylhaalla kuin mahdollista -> sen paalla ei ole ruutuja
+                    if(y == 0 && i == -1) {
                         continue;
                     }
                     if (ruudut[x + j][y + i].annaPutoaminen()) {
