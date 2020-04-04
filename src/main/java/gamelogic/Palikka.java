@@ -18,6 +18,11 @@ public class Palikka {
         }
     }
 
+    //asettaa (uuden) palikan ruudukolle
+    public void asetaRuudukolle() {
+        ruudukko.paivitaRuudukko(sijainti, kaantoAlue);
+    }
+
     public void pudotaNiinPaljonKuinMahdollista() {
         //pudottaa kunnes putoaa alas asti
         while(onkoPutoamassa) {

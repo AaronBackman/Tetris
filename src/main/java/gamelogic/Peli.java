@@ -42,6 +42,7 @@ public class Peli {
             pisteet += pelinTila.poistaTaydetRuudut();
 
             putoavaPalikka = new PalikkaTehdas().teeSatunnainenPalikka(pelinTila);
+            putoavaPalikka.asetaRuudukolle();
         }
     }
 

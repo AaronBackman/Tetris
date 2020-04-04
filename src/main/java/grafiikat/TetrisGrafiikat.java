@@ -87,6 +87,7 @@ public class TetrisGrafiikat extends Application {
                 if (peli.onkoPeliKaynnissa() == false) {
                     try {
                         ajastin.stop();
+                        peliLoppuValikko();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -108,30 +109,7 @@ public class TetrisGrafiikat extends Application {
 
     private void piirraPeli() {
 
-        GridPane ruudukko = new GridPane();
-        ruudukko.setHgap(5);
-        ruudukko.setVgap(5);
-        ruudukko.setPadding(new Insets(10, 10, 10, 10));
-
-        for (int rivi = 0; rivi < Ruudukko.KORKEUS; rivi++) {
-            for (int sarake = 0; sarake < Ruudukko.LEVEYS; sarake++) {
-                StackPane ruutu = new StackPane();
-                ruutu.setMaxSize(30, 30);
-
-                String vari = peli.annaRuudukko().annaRuudut()[sarake + Ruudukko.REUNA_ALUE][rivi + Ruudukko.SIJOITUS_ALUE].annaVariMerkkijonona();
-
-
-                ruutu.setStyle("-fx-background-color: " + vari + ";");
-                ruudukko.add(ruutu, sarake, rivi);
-            }
-        }
-        for (int i = 0; i < Ruudukko.KORKEUS; i++) {
-            ruudukko.getColumnConstraints().add(new ColumnConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true));
-            ruudukko.getRowConstraints().add(new RowConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, VPos.CENTER, true));
-        }
-        ruudukko.prefHeight(250);
-        ruudukko.prefWidth(500);
-        ruudukko.setAlignment(Pos.CENTER);
+        GridPane ruudukko = teePeliRuudukko();
 
         String pisteet = String.valueOf(peli.annaPisteet());
         Label pisteTaulu = new Label("PISTEET: " + pisteet);
@@ -188,6 +166,35 @@ public class TetrisGrafiikat extends Application {
         paaIkkuna.show();
     }
 
+    private GridPane teePeliRuudukko() {
+        GridPane ruudukko = new GridPane();
+        ruudukko.setHgap(5);
+        ruudukko.setVgap(5);
+        ruudukko.setPadding(new Insets(10, 10, 10, 10));
+
+        for (int rivi = 0; rivi < Ruudukko.KORKEUS; rivi++) {
+            for (int sarake = 0; sarake < Ruudukko.LEVEYS; sarake++) {
+                StackPane ruutu = new StackPane();
+                ruutu.setMaxSize(30, 30);
+
+                String vari = peli.annaRuudukko().annaRuudut()[sarake + Ruudukko.REUNA_ALUE][rivi + Ruudukko.SIJOITUS_ALUE].annaVariMerkkijonona();
+
+
+                ruutu.setStyle("-fx-background-color: " + vari + ";");
+                ruudukko.add(ruutu, sarake, rivi);
+            }
+        }
+        for (int i = 0; i < Ruudukko.KORKEUS; i++) {
+            ruudukko.getColumnConstraints().add(new ColumnConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true));
+            ruudukko.getRowConstraints().add(new RowConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, VPos.CENTER, true));
+        }
+        ruudukko.prefHeight(250);
+        ruudukko.prefWidth(500);
+        ruudukko.setAlignment(Pos.CENTER);
+
+        return ruudukko;
+    }
+
     private void taukoValikko() {
         Button jatkaNappula = new Button("Jatka Pelia");
         jatkaNappula.setOnAction(tapahtuma -> {
@@ -201,6 +208,32 @@ public class TetrisGrafiikat extends Application {
         paaIkkuna.setScene(new Scene(root, 600, 600));
         paaIkkuna.show();
     }
+
+    private void peliLoppuValikko() {
+        GridPane ruudukko = teePeliRuudukko();
+
+        Button takaisinMenuunNappi = new Button("Palaa Päävalikkoon");
+        takaisinMenuunNappi.setOnAction(tapahtuma -> {
+            piirraPaaValikko();
+        });
+
+        Button uusiPeliNappi = new Button("Uusi Peli");
+        uusiPeliNappi.setOnAction(tapahtuma -> {
+            this.peli = new Peli();
+            peliIkkuna();
+        });
+
+        VBox valikko = new VBox();
+        valikko.getChildren().addAll(uusiPeliNappi, takaisinMenuunNappi);
+        BorderPane.setAlignment(valikko, Pos.CENTER_RIGHT);
+
+        BorderPane root = new BorderPane();
+        root.setCenter(ruudukko);
+        root.setRight(valikko);
+
+        paaIkkuna.setScene(new Scene(root, 600, 600));
+    }
+
     /*
     private void musiikki() {
 
