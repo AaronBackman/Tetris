@@ -11,14 +11,14 @@ public class RuutuTehdas {
 
     public Ruutu teeTyhjaRuutu() {
         Ruutu ruutu = new Ruutu();
-        ruutu.asetaVari(Vari.HARMAA);
+        ruutu.asetaVari(Vari.MUSTA);
         ruutu.asetaPutoaminen(false);
         ruutu.asetaTaynna(false);
         return ruutu;
     }
     public Ruutu teeReunaRuutu() {
         Ruutu ruutu = new Ruutu();
-        ruutu.asetaVari(Vari.HARMAA);
+        ruutu.asetaVari(Vari.MUSTA);
         ruutu.asetaPutoaminen(false);
         ruutu.asetaTaynna(true);
         return ruutu;

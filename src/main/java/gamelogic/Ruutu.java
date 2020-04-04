@@ -30,8 +30,8 @@ public class Ruutu {
     }
 
     public String annaVariMerkkijonona() {
-        if(vari == Vari.HARMAA) {
-            return "darkgrey";
+        if(vari == Vari.MUSTA) {
+            return "black";
         }
         else if(vari == Vari.TURKOOSI) {
             return "aqua";
