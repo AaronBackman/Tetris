@@ -55,7 +55,7 @@ public class Ruudukko {
     }
 
     public int poistaTaydetRuudut() {
-        int pisteet = 0;
+        int poistetutRivit = 0;
 
         for(int i=0; i<KORKEUS; i++) {
             int taydetRuudutRivilla = 0;
@@ -67,8 +67,26 @@ public class Ruudukko {
             }
             if(taydetRuudutRivilla == LEVEYS) {
                 pudotaRiville(i);
-                pisteet += 1;
+                poistetutRivit += 1;
             }
+        }
+
+        int pisteet = 0;
+        switch (poistetutRivit) {
+            case 1:
+                pisteet = 40;
+                break;
+            case 2:
+                pisteet = 100;
+                break;
+            case 3:
+                pisteet = 300;
+                break;
+            case 4:
+                pisteet = 1200;
+                break;
+            default:
+                break;
         }
         return  pisteet;
     }
