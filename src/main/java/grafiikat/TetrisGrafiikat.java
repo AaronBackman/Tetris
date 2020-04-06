@@ -14,9 +14,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.File;
 
 public class TetrisGrafiikat extends Application {
     private boolean tauko;
@@ -32,13 +36,13 @@ public class TetrisGrafiikat extends Application {
     public void start(Stage paaIkkuna) {
         this.paaIkkuna = paaIkkuna;
 
+        soitaMusiikkia();
+
         paaIkkuna.setTitle("Tetris Limited Edition");
         paaValikko();
     }
 
     private void paaValikko() {
-        //musiikki();
-
         Label otsikko = new Label("TETRIS");
         otsikko.setPrefSize(200, 50);
         otsikko.setStyle("-fx-font: 40 arial;");
@@ -119,7 +123,7 @@ public class TetrisGrafiikat extends Application {
 
         String pisteet = String.valueOf(peli.annaPisteet());
         Label pisteTaulu = new Label("PISTEET: " + pisteet);
-        pisteTaulu.setPrefSize(120, 50);
+        pisteTaulu.setPrefSize(400, 50);
         pisteTaulu.setStyle("-fx-font-size:20");
 
         Button taukoNappi = new Button("PAUSSI");
@@ -256,7 +260,7 @@ public class TetrisGrafiikat extends Application {
 
         String pisteet = String.valueOf(peli.annaPisteet());
         Label pisteTaulu = new Label("PISTEET: " + pisteet);
-        pisteTaulu.setPrefSize(120, 50);
+        pisteTaulu.setPrefSize(400, 50);
         pisteTaulu.setStyle("-fx-font-size:20");
 
         Button takaisinMenuunNappi = new Button("Päävalikko");
@@ -296,11 +300,19 @@ public class TetrisGrafiikat extends Application {
         paaIkkuna.close();
     }
 
-    /*
-    private void musiikki() {
+    //on tassa jotta garbage collector ei poistaisi sita
+    MediaPlayer soitin;
+    //soittaa tetris teema musiikkia
+    public void soitaMusiikkia() {
 
-        AudioClip note = new AudioClip(this.getClass().getResource("TetrisMusiikki").toString());
-        note.play();
+        String suhteellinenPolku = "src/main/resources/musiikki/Tetris_theme.mp3";
+        Media aani = new Media(new File(suhteellinenPolku).toURI().toString());
+        soitin = new MediaPlayer(aani);
+        soitin.setOnEndOfMedia(new Runnable() {
+            public void run() {
+                soitin.seek(Duration.ZERO);
+            }
+        });
+        soitin.play();
     }
-    */
 }
