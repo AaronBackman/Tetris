@@ -134,7 +134,7 @@ public class Ruudukko {
         int y = sijainti[1];
 
         for(int i=0; i<palikkaAlue.length; i++) {
-            for(int j=0; j<palikkaAlue[0].length; j++) {
+            for(int j=0; j<palikkaAlue.length; j++) {
                 if(y + j >= SIJOITUS_ALUE) {
                     return false;
                 }
@@ -163,6 +163,36 @@ public class Ruudukko {
             }
         }
         return true;
+    }
+
+    //asettaa palikan, joka nayttaa mihin palikka putoaisi, ruutua kuvaa harmaa tyhja ruutu
+    public void asetaPutoamisKohtaPalikka(int[] putoamisSijainti, Ruutu[][] palikkaAlue) {
+        RuutuTehdas rt = new RuutuTehdas();
+        int x = putoamisSijainti[0];
+        int y = putoamisSijainti[1];
+
+        for(int i=0; i<palikkaAlue.length; i++) {
+            for(int j=0; j<palikkaAlue[0].length; j++) {
+                if(palikkaAlue[j][i].onkoTaynna()) {
+                    //asettaa palikkaAluetta vastaavan ruudun ruudukossa harmaaksi
+                    ruudut[x + j][y + i] = rt.teePutoamisKohtaRuutu();
+                }
+            }
+        }
+    }
+
+    public void poistaPutoamisKohtaPalikka(int[] putoamisSijainti, Ruutu[][] palikkaAlue) {
+        int x = putoamisSijainti[0];
+        int y = putoamisSijainti[1];
+
+        //putoamiskohtaruudut ovat vain erivarisia tyhjia ruutuja, joten varin vaihto riittaa poistamiseen
+        for(int i=0; i<palikkaAlue.length; i++) {
+            for(int j=0; j<palikkaAlue[0].length; j++) {
+                if(ruudut[x + j][y + i].annaVari() == Vari.HARMAA) {
+                    ruudut[x + j][y + i].asetaVari(Vari.MUSTA);
+                }
+            }
+        }
     }
 
     public Ruutu[][] annaRuudut() {

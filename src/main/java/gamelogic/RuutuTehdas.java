@@ -23,4 +23,11 @@ public class RuutuTehdas {
         ruutu.asetaTaynna(true);
         return ruutu;
     }
+    public Ruutu teePutoamisKohtaRuutu() {
+        Ruutu ruutu = new Ruutu();
+        ruutu.asetaVari(Vari.HARMAA);
+        ruutu.asetaPutoaminen(false);
+        ruutu.asetaTaynna(false);
+        return ruutu;
+    }
 }

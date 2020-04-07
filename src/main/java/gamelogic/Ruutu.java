@@ -5,30 +5,6 @@ public class Ruutu {
     private boolean onkoTaynna;
     private Vari vari;
 
-    public boolean annaPutoaminen() {
-        return putoaako;
-    }
-
-    public void asetaPutoaminen(boolean putoaako) {
-        this.putoaako = putoaako;
-    }
-
-    public boolean onkoTaynna() {
-        return onkoTaynna;
-    }
-
-    public void asetaTaynna(boolean onkoTaynna) {
-        this.onkoTaynna = onkoTaynna;
-    }
-
-    public Vari annaVari() {
-        return vari;
-    }
-
-    public void asetaVari(Vari vari) {
-        this.vari = vari;
-    }
-
     public String annaVariMerkkijonona() {
         if(vari == Vari.MUSTA) {
             return "black";
@@ -54,8 +30,35 @@ public class Ruutu {
         else if(vari == Vari.PUNAINEN) {
             return "red";
         }
+        else if(vari == Vari.HARMAA) {
+            return "grey";
+        }
         else {
             return "black";
         }
+    }
+
+    public boolean annaPutoaminen() {
+        return putoaako;
+    }
+
+    public void asetaPutoaminen(boolean putoaako) {
+        this.putoaako = putoaako;
+    }
+
+    public boolean onkoTaynna() {
+        return onkoTaynna;
+    }
+
+    public void asetaTaynna(boolean onkoTaynna) {
+        this.onkoTaynna = onkoTaynna;
+    }
+
+    public Vari annaVari() {
+        return vari;
+    }
+
+    public void asetaVari(Vari vari) {
+        this.vari = vari;
     }
 }
