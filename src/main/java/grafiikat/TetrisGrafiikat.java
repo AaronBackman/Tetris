@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -23,6 +24,9 @@ import javafx.util.Duration;
 import java.io.File;
 
 public class TetrisGrafiikat extends Application {
+    //asteikolla 0-100
+    private MediaPlayer soitin;
+    private Slider musiikkiSlideri;
     private boolean tauko;
     private Peli peli;
     private Stage paaIkkuna;
@@ -36,7 +40,10 @@ public class TetrisGrafiikat extends Application {
     public void start(Stage paaIkkuna) {
         this.paaIkkuna = paaIkkuna;
 
-        soitaMusiikkia();
+        this.soitin = teeSoitin();
+        soitin.play();
+
+        this.musiikkiSlideri = teeMusiikkiSlideri();
 
         paaIkkuna.setTitle("Tetris Limited Edition");
         paaValikko();
@@ -72,12 +79,13 @@ public class TetrisGrafiikat extends Application {
         valikko.getChildren().addAll(siirryPeliinNappi, sammutaOhjelmaNappi);
 
         BorderPane root = new BorderPane();
+        root.setBottom(musiikkiSlideri);
         root.setBackground(new Background(new BackgroundFill(taustaVari, CornerRadii.EMPTY, Insets.EMPTY)));
         root.setCenter(valikko);
         root.setTop(ylaRivi);
 
 
-        paaIkkuna.setScene(new Scene(root, 800, 600));
+        paaIkkuna.setScene(new Scene(root, 800, 650));
         paaIkkuna.show();
     }
 
@@ -130,7 +138,7 @@ public class TetrisGrafiikat extends Application {
         taukoNappi.setPrefSize(120, 50);
         taukoNappi.setStyle("-fx-font-size:20");
         taukoNappi.setFocusTraversable(false);
-        BorderPane.setAlignment(taukoNappi, Pos.BOTTOM_RIGHT);
+        BorderPane.setAlignment(taukoNappi, Pos.TOP_RIGHT);
         taukoNappi.setOnAction(tapahtuma -> {
             tauko = true;
             taukoValikko();
@@ -143,8 +151,9 @@ public class TetrisGrafiikat extends Application {
         root.setCenter(ruudukko);
         root.setTop(pisteTaulu);
         root.setRight(taukoNappi);
+        root.setBottom(musiikkiSlideri);
 
-        paaIkkuna.setScene(new Scene(root, 800, 600));
+        paaIkkuna.setScene(new Scene(root, 800, 650));
         paaIkkuna.getScene().setOnKeyPressed(tapahtuma -> {
 
             switch (tapahtuma.getCode()) {
@@ -248,10 +257,11 @@ public class TetrisGrafiikat extends Application {
         valikko.getChildren().addAll(jatkaNappula, takaisinMenuunNappi, uusiPeliNappi, sammutaOhjelmaNappi);
 
         BorderPane root = new BorderPane();
+        root.setBottom(musiikkiSlideri);
         root.setBackground(new Background(new BackgroundFill(taustaVari, CornerRadii.EMPTY, Insets.EMPTY)));
         root.setCenter(valikko);
 
-        paaIkkuna.setScene(new Scene(root, 800, 600));
+        paaIkkuna.setScene(new Scene(root, 800, 650));
         paaIkkuna.show();
     }
 
@@ -292,8 +302,31 @@ public class TetrisGrafiikat extends Application {
         root.setLeft(ruudukko);
         root.setCenter(valikko);
         root.setTop(pisteTaulu);
+        root.setBottom(musiikkiSlideri);
 
-        paaIkkuna.setScene(new Scene(root, 800, 600));
+        paaIkkuna.setScene(new Scene(root, 800, 650));
+    }
+
+    private Slider teeMusiikkiSlideri() {
+        Slider slideri = new Slider();
+        slideri.setMin(0);
+        slideri.setMax(100);
+        //slideri asteikolla 0-100, aanenvoimakkuus 0-1 -> kerrotaan 100:lla
+        slideri.setValue(soitin.getVolume() * 100);
+        slideri.setShowTickLabels(true);
+        slideri.setShowTickMarks(true);
+        slideri.setMajorTickUnit(50);
+        slideri.setMinorTickCount(25);
+        slideri.setBlockIncrement(25);
+        slideri.valueProperty().addListener(e -> {
+            //aanenvoimakkuus asteikolla 0-1, slideri 0-100 -> jaetaan 100:lla
+            soitin.setVolume(slideri.getValue() / 100.0);
+        });
+
+        BorderPane.setAlignment(slideri, Pos.BOTTOM_RIGHT);
+        slideri.setMaxWidth(150);
+
+        return slideri;
     }
 
     private void sammutaOhjelma() {
@@ -301,9 +334,8 @@ public class TetrisGrafiikat extends Application {
     }
 
     //on tassa jotta garbage collector ei poistaisi sita
-    MediaPlayer soitin;
     //soittaa tetris teema musiikkia
-    public void soitaMusiikkia() {
+    public MediaPlayer teeSoitin() {
 
         String suhteellinenPolku = "src/main/resources/musiikki/Tetris_theme.mp3";
         Media aani = new Media(new File(suhteellinenPolku).toURI().toString());
@@ -313,6 +345,7 @@ public class TetrisGrafiikat extends Application {
                 soitin.seek(Duration.ZERO);
             }
         });
-        soitin.play();
+        soitin.setVolume(0.5);
+        return soitin;
     }
 }
