@@ -1,7 +1,6 @@
 package grafiikat;
 
-import gamelogic.Peli;
-import gamelogic.Ruudukko;
+import gamelogic.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -19,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.util.LinkedList;
 
 public class TetrisGrafiikat extends Application {
     private MediaPlayer soitin;
@@ -157,6 +157,7 @@ public class TetrisGrafiikat extends Application {
         root.setTop(pisteTaulu);
         root.setRight(taukoNappi);
         root.setBottom(musiikkiSlideri);
+        root.setLeft(naytaSeuraavatPalikat());
 
         paaIkkuna.setScene(new Scene(root, leveys, korkeus));
         paaIkkuna.getScene().setOnKeyPressed(tapahtuma -> {
@@ -195,6 +196,7 @@ public class TetrisGrafiikat extends Application {
         paaIkkuna.show();
     }
 
+    //tekee gridpane tyyppisen ruudukon joka voidaan piirtaa peli ikkunassa
     private GridPane teePeliRuudukko() {
         GridPane ruudukko = new GridPane();
         ruudukko.setHgap(5);
@@ -226,6 +228,56 @@ public class TetrisGrafiikat extends Application {
         ruudukko.setAlignment(Pos.CENTER);
 
         return ruudukko;
+    }
+
+    //palauttaa seuraavat palikat pystysuoraan omissa gridpane ruudukoissaan
+    private VBox naytaSeuraavatPalikat() {
+        LinkedList<Palikka> seuraavatPalikat = peli.annaSeuraavatPalikat();
+
+        VBox palikat = new VBox();
+
+        for(Palikka palikka : seuraavatPalikat) {
+            GridPane palikkaRuudukko = new GridPane();
+
+            //palikan pisimman sivun pituus, esim L palikka: pituus = 3
+            int palikanPituus = palikka.annaKaantoAlue().length;
+            //suurimman palikan (I palikka) suurimman sivun pituus
+            final int maxPalikanPituus = 4;
+            int ruudunKoko = 20;
+
+            for (int rivi = 0; rivi < maxPalikanPituus; rivi++) {
+                for (int sarake = 0; sarake < maxPalikanPituus; sarake++) {
+                    StackPane ruutu = new StackPane();
+                    ruutu.setPrefSize(ruudunKoko, ruudunKoko);
+                    ruutu.setBorder(new Border(new BorderStroke(Color.GOLD, BorderStrokeStyle.SOLID,
+                            CornerRadii.EMPTY, new BorderWidths(2, 2, 2, 2))));
+
+                    String vari;
+                    //jos palikka on pienempi kuin maksimialue, laitetaan tyhja palikka paikalle
+                    if(sarake >= palikanPituus || rivi >= palikanPituus) {
+                        //tyhjan palikan vari
+                        vari = new RuutuTehdas().teeTyhjaRuutu().annaVariMerkkijonona();
+                    }
+                    else {
+                        vari = palikka.annaKaantoAlue()[sarake][rivi].annaVariMerkkijonona();
+                    }
+
+                    ruutu.setStyle("-fx-background-color: " + vari + ";");
+                    palikkaRuudukko.add(ruutu, sarake, rivi);
+                }
+            }
+            for (int i = 0; i < maxPalikanPituus; i++) {
+                palikkaRuudukko.getColumnConstraints().add(new ColumnConstraints(ruudunKoko, ruudunKoko, ruudunKoko, Priority.ALWAYS, HPos.CENTER, true));
+                palikkaRuudukko.getRowConstraints().add(new RowConstraints(ruudunKoko, ruudunKoko, ruudunKoko, Priority.ALWAYS, VPos.CENTER, true));
+            }
+            //palikan maksimipituus 4 ruutua (I palikka)
+            palikkaRuudukko.prefHeight(ruudunKoko * palikanPituus);
+            palikkaRuudukko.prefWidth(ruudunKoko * palikanPituus);
+            palikkaRuudukko.setAlignment(Pos.CENTER);
+
+            palikat.getChildren().add(palikkaRuudukko);
+        }
+        return palikat;
     }
 
     private void taukoValikko() {
@@ -390,6 +442,10 @@ public class TetrisGrafiikat extends Application {
         paaIkkuna.setScene(new Scene(root, leveys, korkeus));
     }
 
+    private void sammutaOhjelma() {
+        paaIkkuna.close();
+    }
+
     private Slider teeMusiikkiSlideri() {
         Slider slideri = new Slider();
         slideri.setMin(0);
@@ -410,10 +466,6 @@ public class TetrisGrafiikat extends Application {
         slideri.setMaxWidth(150);
 
         return slideri;
-    }
-
-    private void sammutaOhjelma() {
-        paaIkkuna.close();
     }
 
     //on tassa jotta garbage collector ei poistaisi sita

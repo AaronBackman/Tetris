@@ -1,7 +1,10 @@
 package gamelogic;
 
+import java.util.LinkedList;
+
 public class Peli {
     private Ruudukko pelinTila;
+    private LinkedList<Palikka> seuraavatPalikat;
     private Palikka putoavaPalikka;
     private boolean peliKaynnissa;
     private int pisteet;
@@ -9,24 +12,36 @@ public class Peli {
     public Peli() {
         this.pelinTila = new Ruudukko();
         this.putoavaPalikka = new PalikkaTehdas().teeSatunnainenPalikka(pelinTila);
+        this.seuraavatPalikat = new LinkedList<>();
+
+        //varastoi 3 seuraavaa palikkaa
+        for(int i=0; i<3; i++) {
+            seuraavatPalikat.add(new PalikkaTehdas().teeSatunnainenPalikka(pelinTila));
+        }
         this.peliKaynnissa = true;
     }
 
     public void otaInputti(String input) {
 
-        if (input.equals("vasen")) {
-            putoavaPalikka.liikuVasemmalle();
-        } else if (input.equals("oikea")) {
-            putoavaPalikka.liikuOikealle();
-        } else if (input.equals("alas")) {
-            putoavaPalikka.pudotaYksiRuutu();
-        } else if (input.equals("vastaPaivaan")) {
-            putoavaPalikka.kaannaVastapaivaan();
-        } else if (input.equals("myotaPaivaan")) {
-            putoavaPalikka.kaannaMyotapaivaan();
-        }
-        else if (input.equals("pudotaAlasAsti")) {
-            putoavaPalikka.pudotaNiinPaljonKuinMahdollista();
+        switch (input) {
+            case "vasen":
+                putoavaPalikka.liikuVasemmalle();
+                break;
+            case "oikea":
+                putoavaPalikka.liikuOikealle();
+                break;
+            case "alas":
+                putoavaPalikka.pudotaYksiRuutu();
+                break;
+            case "vastaPaivaan":
+                putoavaPalikka.kaannaVastapaivaan();
+                break;
+            case "myotaPaivaan":
+                putoavaPalikka.kaannaMyotapaivaan();
+                break;
+            case "pudotaAlasAsti":
+                putoavaPalikka.pudotaNiinPaljonKuinMahdollista();
+                break;
         }
     }
 
@@ -41,7 +56,8 @@ public class Peli {
 
             pisteet += pelinTila.poistaTaydetRuudut();
 
-            putoavaPalikka = new PalikkaTehdas().teeSatunnainenPalikka(pelinTila);
+            seuraavatPalikat.add(new PalikkaTehdas().teeSatunnainenPalikka(pelinTila));
+            putoavaPalikka = seuraavatPalikat.poll();
             putoavaPalikka.asetaRuudukolle();
         }
     }
@@ -56,5 +72,9 @@ public class Peli {
 
     public int annaPisteet() {
         return pisteet;
+    }
+
+    public LinkedList<Palikka> annaSeuraavatPalikat() {
+        return seuraavatPalikat;
     }
 }
