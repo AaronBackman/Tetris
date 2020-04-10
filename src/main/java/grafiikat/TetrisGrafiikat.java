@@ -10,10 +10,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Control;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -32,6 +29,8 @@ public class TetrisGrafiikat extends Application {
     private Stage paaIkkuna;
     private Timeline ajastin;
     private final Color taustaVari = Color.TEAL;
+    private int leveys = 800;
+    private int korkeus = 650;
 
     public static void main(String[] args) {
         launch(args);
@@ -61,12 +60,19 @@ public class TetrisGrafiikat extends Application {
 
         //aloittaa uuden pelin
         Button siirryPeliinNappi = new Button("Aloita Peli");
-        siirryPeliinNappi.setOnAction(e -> {
+        siirryPeliinNappi.setOnAction(tapahtuma -> {
             this.peli = new Peli();
             peliIkkuna();
         });
         siirryPeliinNappi.setPrefSize(200, 60);
         siirryPeliinNappi.setStyle("-fx-font-size:25");
+
+        Button asetuksetNappi = new Button("Asetukset");
+        asetuksetNappi.setOnAction(tapahtuma -> {
+            asetuksetIkkuna(false);
+        });
+        asetuksetNappi.setPrefSize(200, 60);
+        asetuksetNappi.setStyle("-fx-font-size:25");
 
         Button sammutaOhjelmaNappi = new Button("Sammuta Peli");
         sammutaOhjelmaNappi.setOnAction(tapahtuma -> sammutaOhjelma());
@@ -76,7 +82,7 @@ public class TetrisGrafiikat extends Application {
         VBox valikko = new VBox();
         valikko.setAlignment(Pos.CENTER);
 
-        valikko.getChildren().addAll(siirryPeliinNappi, sammutaOhjelmaNappi);
+        valikko.getChildren().addAll(siirryPeliinNappi, asetuksetNappi, sammutaOhjelmaNappi);
 
         BorderPane root = new BorderPane();
         root.setBottom(musiikkiSlideri);
@@ -85,7 +91,7 @@ public class TetrisGrafiikat extends Application {
         root.setTop(ylaRivi);
 
 
-        paaIkkuna.setScene(new Scene(root, 800, 650));
+        paaIkkuna.setScene(new Scene(root, leveys, korkeus));
         paaIkkuna.show();
     }
 
@@ -153,7 +159,7 @@ public class TetrisGrafiikat extends Application {
         root.setRight(taukoNappi);
         root.setBottom(musiikkiSlideri);
 
-        paaIkkuna.setScene(new Scene(root, 800, 650));
+        paaIkkuna.setScene(new Scene(root, leveys, korkeus));
         paaIkkuna.getScene().setOnKeyPressed(tapahtuma -> {
 
             switch (tapahtuma.getCode()) {
@@ -224,13 +230,20 @@ public class TetrisGrafiikat extends Application {
     }
 
     private void taukoValikko() {
-        Button jatkaNappula = new Button("Jatka Peliä");
-        jatkaNappula.setOnAction(tapahtuma -> {
+        Button jatkaNappi = new Button("Jatka Peliä");
+        jatkaNappi.setOnAction(tapahtuma -> {
             tauko = false;
             peliIkkuna();
         });
-        jatkaNappula.setPrefSize(200, 60);
-        jatkaNappula.setStyle("-fx-font-size:25");
+        jatkaNappi.setPrefSize(200, 60);
+        jatkaNappi.setStyle("-fx-font-size:25");
+
+        Button asetuksetNappi = new Button("Asetukset");
+        asetuksetNappi.setOnAction(tapahtuma -> {
+            asetuksetIkkuna(true);
+        });
+        asetuksetNappi.setPrefSize(200, 60);
+        asetuksetNappi.setStyle("-fx-font-size:25");
 
         Button takaisinMenuunNappi = new Button("Päävalikko");
         takaisinMenuunNappi.setOnAction(tapahtuma -> {
@@ -254,14 +267,82 @@ public class TetrisGrafiikat extends Application {
 
         VBox valikko = new VBox();
         valikko.setAlignment(Pos.CENTER);
-        valikko.getChildren().addAll(jatkaNappula, takaisinMenuunNappi, uusiPeliNappi, sammutaOhjelmaNappi);
+        valikko.getChildren().addAll(jatkaNappi, asetuksetNappi, takaisinMenuunNappi, uusiPeliNappi, sammutaOhjelmaNappi);
 
         BorderPane root = new BorderPane();
         root.setBottom(musiikkiSlideri);
         root.setBackground(new Background(new BackgroundFill(taustaVari, CornerRadii.EMPTY, Insets.EMPTY)));
         root.setCenter(valikko);
 
-        paaIkkuna.setScene(new Scene(root, 800, 650));
+        paaIkkuna.setScene(new Scene(root, leveys, korkeus));
+        paaIkkuna.show();
+    }
+
+    private void asetuksetIkkuna(boolean onkoPelissa) {
+        VBox valikko = new VBox();
+
+        TextField ikkunanLeveysNappi = new TextField();
+        ikkunanLeveysNappi.setPromptText("Ikkunan Leveys: " + leveys);
+        ikkunanLeveysNappi.setFocusTraversable(false);
+        ikkunanLeveysNappi.setPrefSize(200, 60);
+        ikkunanLeveysNappi.setStyle("-fx-font-size:25");
+
+        TextField ikkunanKorkeusNappi = new TextField();
+        ikkunanKorkeusNappi.setPromptText("Ikkunan Korkeus: " + korkeus);
+        ikkunanKorkeusNappi.setFocusTraversable(false);
+        ikkunanKorkeusNappi.setPrefSize(200, 60);
+        ikkunanKorkeusNappi.setStyle("-fx-font-size:25");
+
+        valikko.getChildren().addAll(ikkunanLeveysNappi, ikkunanKorkeusNappi);
+
+        Button muutostenVahvistusNappi = new Button("Vahvista Muutokset");
+        muutostenVahvistusNappi.setPrefSize(200, 60);
+        muutostenVahvistusNappi.setStyle("-fx-font-size:25");
+        muutostenVahvistusNappi.setOnAction(tapahtuma -> {
+            this.leveys = Integer.parseInt(ikkunanLeveysNappi.getText());
+            this.korkeus = Integer.parseInt(ikkunanKorkeusNappi.getText());
+
+            //piirtaa asetusikkunan uuden kokoisena
+            asetuksetIkkuna(onkoPelissa);
+        });
+        BorderPane.setAlignment(muutostenVahvistusNappi, Pos.BOTTOM_RIGHT);
+
+        if(onkoPelissa == false) {
+            Button takaisinPaaValikkoon = new Button("Poistu Asetuksista");
+            takaisinPaaValikkoon.setOnAction(tapahtuma -> {
+                paaValikko();
+            });
+            takaisinPaaValikkoon.setPrefSize(200, 60);
+            takaisinPaaValikkoon.setStyle("-fx-font-size:25");
+            valikko.getChildren().add(takaisinPaaValikkoon);
+        }
+
+        //oli tauko valikossa
+        else if(peli.onkoPeliKaynnissa()) {
+            Button takaisinPeliinNappi = new Button("Poistu Asetuksista");
+            takaisinPeliinNappi.setOnAction(tapahtuma -> {
+                taukoValikko();
+            });
+            takaisinPeliinNappi.setPrefSize(200, 60);
+            takaisinPeliinNappi.setStyle("-fx-font-size:25");
+            valikko.getChildren().add(takaisinPeliinNappi);
+        }
+        //oli pelissa, mutta peli on havitty
+        else {
+            Button takaisinPeliinNappi = new Button("Poistu Asetuksista");
+            takaisinPeliinNappi.setOnAction(tapahtuma -> {
+                peliLoppuValikko();
+            });
+            takaisinPeliinNappi.setPrefSize(200, 60);
+            takaisinPeliinNappi.setStyle("-fx-font-size:25");
+            valikko.getChildren().add(takaisinPeliinNappi);
+        }
+
+         BorderPane root = new BorderPane();
+         root.setCenter(valikko);
+         root.setRight(muutostenVahvistusNappi);
+
+        paaIkkuna.setScene(new Scene(root, leveys, korkeus));
         paaIkkuna.show();
     }
 
@@ -304,7 +385,7 @@ public class TetrisGrafiikat extends Application {
         root.setTop(pisteTaulu);
         root.setBottom(musiikkiSlideri);
 
-        paaIkkuna.setScene(new Scene(root, 800, 650));
+        paaIkkuna.setScene(new Scene(root, leveys, korkeus));
     }
 
     private Slider teeMusiikkiSlideri() {
