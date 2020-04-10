@@ -21,7 +21,6 @@ import javafx.util.Duration;
 import java.io.File;
 
 public class TetrisGrafiikat extends Application {
-    //asteikolla 0-100
     private MediaPlayer soitin;
     private Slider musiikkiSlideri;
     private boolean tauko;
@@ -324,8 +323,8 @@ public class TetrisGrafiikat extends Application {
             takaisinPeliinNappi.setOnAction(tapahtuma -> {
                 taukoValikko();
             });
-            takaisinPeliinNappi.setPrefSize(200, 60);
-            takaisinPeliinNappi.setStyle("-fx-font-size:18");
+            takaisinPeliinNappi.setPrefSize(250, 60);
+            takaisinPeliinNappi.setStyle("-fx-font-size:20");
             valikko.getChildren().add(takaisinPeliinNappi);
         }
         //oli pelissa, mutta peli on havitty
@@ -334,12 +333,14 @@ public class TetrisGrafiikat extends Application {
             takaisinPeliinNappi.setOnAction(tapahtuma -> {
                 peliLoppuValikko();
             });
-            takaisinPeliinNappi.setPrefSize(200, 60);
-            takaisinPeliinNappi.setStyle("-fx-font-size:25");
+            takaisinPeliinNappi.setPrefSize(250, 60);
+            takaisinPeliinNappi.setStyle("-fx-font-size:20");
             valikko.getChildren().add(takaisinPeliinNappi);
         }
 
          BorderPane root = new BorderPane();
+         root.setBackground(new Background(new BackgroundFill(taustaVari, CornerRadii.EMPTY, Insets.EMPTY)));
+
          root.setCenter(valikko);
          root.setRight(muutostenVahvistusNappi);
 
