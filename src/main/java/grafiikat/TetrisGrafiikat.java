@@ -280,24 +280,25 @@ public class TetrisGrafiikat extends Application {
 
     private void asetuksetIkkuna(boolean onkoPelissa) {
         VBox valikko = new VBox();
+        valikko.setAlignment(Pos.TOP_CENTER);
 
         TextField ikkunanLeveysNappi = new TextField();
         ikkunanLeveysNappi.setPromptText("Ikkunan Leveys: " + leveys);
         ikkunanLeveysNappi.setFocusTraversable(false);
-        ikkunanLeveysNappi.setPrefSize(200, 60);
-        ikkunanLeveysNappi.setStyle("-fx-font-size:25");
+        ikkunanLeveysNappi.setMaxSize(250, 60);
+        ikkunanLeveysNappi.setStyle("-fx-font-size:20");
 
         TextField ikkunanKorkeusNappi = new TextField();
         ikkunanKorkeusNappi.setPromptText("Ikkunan Korkeus: " + korkeus);
         ikkunanKorkeusNappi.setFocusTraversable(false);
-        ikkunanKorkeusNappi.setPrefSize(200, 60);
-        ikkunanKorkeusNappi.setStyle("-fx-font-size:25");
+        ikkunanKorkeusNappi.setMaxSize(250, 60);
+        ikkunanKorkeusNappi.setStyle("-fx-font-size:20");
 
         valikko.getChildren().addAll(ikkunanLeveysNappi, ikkunanKorkeusNappi);
 
         Button muutostenVahvistusNappi = new Button("Vahvista Muutokset");
-        muutostenVahvistusNappi.setPrefSize(200, 60);
-        muutostenVahvistusNappi.setStyle("-fx-font-size:25");
+        muutostenVahvistusNappi.setPrefSize(250, 60);
+        muutostenVahvistusNappi.setStyle("-fx-font-size:20");
         muutostenVahvistusNappi.setOnAction(tapahtuma -> {
             this.leveys = Integer.parseInt(ikkunanLeveysNappi.getText());
             this.korkeus = Integer.parseInt(ikkunanKorkeusNappi.getText());
@@ -312,8 +313,8 @@ public class TetrisGrafiikat extends Application {
             takaisinPaaValikkoon.setOnAction(tapahtuma -> {
                 paaValikko();
             });
-            takaisinPaaValikkoon.setPrefSize(200, 60);
-            takaisinPaaValikkoon.setStyle("-fx-font-size:25");
+            takaisinPaaValikkoon.setPrefSize(250, 60);
+            takaisinPaaValikkoon.setStyle("-fx-font-size:20");
             valikko.getChildren().add(takaisinPaaValikkoon);
         }
 
@@ -324,7 +325,7 @@ public class TetrisGrafiikat extends Application {
                 taukoValikko();
             });
             takaisinPeliinNappi.setPrefSize(200, 60);
-            takaisinPeliinNappi.setStyle("-fx-font-size:25");
+            takaisinPeliinNappi.setStyle("-fx-font-size:18");
             valikko.getChildren().add(takaisinPeliinNappi);
         }
         //oli pelissa, mutta peli on havitty
