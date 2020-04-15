@@ -43,4 +43,49 @@ class RuudukkoTesti {
             }
         }
     }
+
+    @Test
+    public void poistaTaydetRuudutTesti() {
+        RuutuTehdas rt = new RuutuTehdas();
+        Ruutu I = rt.teeReunaRuutu();
+        Ruutu O = rt.teeTyhjaRuutu();
+        //uusi ruudukko, jossa on 2 taytta rivia, tarkoituksena poistaa taydet rivit ja laskea pisteet
+        ruudukko.asetaRuudut(new Ruutu[][]{
+                {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
+                {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
+                {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
+                {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
+                {O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,I,I,I,I,I,I},
+                {O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,I,I,I,I,I,I},
+                {O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,I,I,I,I,I,I},
+                {O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,I,I,I,I,I,I},
+                {O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,I,I,I,I,I,I},
+                {O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,I,I,I,I,I,I},
+                {O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,I,I,I,I,I,I},
+                {O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,I,O,I,I,I,I,I,I},
+                {O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,I,I,I,I,I,I,I,I},
+                {O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,O,I,I,I,I,I,I},
+                {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
+                {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
+                {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
+                {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I}
+        });
+
+        int pisteTulos = ruudukko.poistaTaydetRuudut();
+        int odotetutPisteet = 100; //kaksi poistettua rivia -> 100 pistetta
+
+        assertFalse(ruudukko.annaRuudut()[6][20].onkoTaynna());
+        assertFalse(ruudukko.annaRuudut()[6][21].onkoTaynna());
+
+        assertFalse(ruudukko.annaRuudut()[12][18].onkoTaynna());
+        assertFalse(ruudukko.annaRuudut()[12][19].onkoTaynna());
+
+        assertFalse(ruudukko.annaRuudut()[11][18].onkoTaynna());
+        assertFalse(ruudukko.annaRuudut()[11][19].onkoTaynna());
+
+        assertTrue(ruudukko.annaRuudut()[11][20].onkoTaynna());
+        assertTrue(ruudukko.annaRuudut()[12][20].onkoTaynna());
+
+        assertEquals(pisteTulos, odotetutPisteet);
+    }
 }

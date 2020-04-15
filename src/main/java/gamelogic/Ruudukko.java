@@ -205,4 +205,8 @@ public class Ruudukko {
     public Ruutu[][] annaRuudut() {
         return ruudut;
     }
+
+    public void asetaRuudut(Ruutu[][] ruudut) {
+        this.ruudut = ruudut;
+    }
 }
