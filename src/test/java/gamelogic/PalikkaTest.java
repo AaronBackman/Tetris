@@ -86,6 +86,14 @@ class RuudukkoTesti {
         assertTrue(ruudukko.annaRuudut()[11][20].onkoTaynna());
         assertTrue(ruudukko.annaRuudut()[12][20].onkoTaynna());
 
+        //reunaruutuja ei saa poistaa
+        assertTrue(ruudukko.annaRuudut()[2][20].onkoTaynna());
+        assertTrue(ruudukko.annaRuudut()[2][21].onkoTaynna());
+        assertTrue(ruudukko.annaRuudut()[6][22].onkoTaynna());
+        assertTrue(ruudukko.annaRuudut()[6][23].onkoTaynna());
+        assertTrue(ruudukko.annaRuudut()[6][24].onkoTaynna());
+        assertTrue(ruudukko.annaRuudut()[6][25].onkoTaynna());
+
         assertEquals(pisteTulos, odotetutPisteet);
     }
 }
