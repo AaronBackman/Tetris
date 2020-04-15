@@ -38,6 +38,25 @@ public class Ruutu {
         }
     }
 
+    public boolean equals(Ruutu toinenRuutu) {
+        //tarkistaa ovatko ruudut molemmat taynna
+        if(this.onkoTaynna() != toinenRuutu.onkoTaynna()) {
+            return false;
+        }
+
+        //tarkistaa ovatko putoamassa
+        if(this.annaPutoaminen() != toinenRuutu.annaPutoaminen()) {
+            return false;
+        }
+
+        //ovatko saman varisia
+        if(this.annaVari() != toinenRuutu.annaVari()) {
+            return false;
+        }
+        //muussa tapauksessa kaikki ominaisuudet ovat samoja -> equals
+        return true;
+    }
+
     public boolean annaPutoaminen() {
         return putoaako;
     }

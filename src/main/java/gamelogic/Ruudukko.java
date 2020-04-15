@@ -30,6 +30,13 @@ public class Ruudukko {
     public void paivitaRuudukko(int[] sijainti, Ruutu[][] palikkaAlue) {
         int x = sijainti[0];
         int y = sijainti[1];
+
+        if(x >= ruudut.length || x < 0) {
+            throw new IndexOutOfBoundsException();
+        } else if(y >= ruudut.length || y < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+
         RuutuTehdas ruutuTehdas = new RuutuTehdas();
         for(int i=-1; i<palikkaAlue.length; i++) {
             for(int j=-1; j<palikkaAlue.length+1; j++) {

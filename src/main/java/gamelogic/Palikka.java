@@ -55,7 +55,7 @@ public class Palikka {
         }
     }
 
-    public void kaannaVastapaivaan() {
+    public void kaannaVastapaivaanRuudukossa() {
         Ruutu[][] kaannetytRuudut = new Ruutu[kaantoAlue.length][kaantoAlue.length];
         for (int i = 0; i < kaantoAlue.length; i++) {
             for (int j = 0; j < kaantoAlue.length; j++) {
@@ -69,7 +69,17 @@ public class Palikka {
         }
     }
 
-    public void kaannaMyotapaivaan() {
+    public Ruutu[][] kaannaVastapaivaan() {
+        Ruutu[][] kaannetytRuudut = new Ruutu[kaantoAlue.length][kaantoAlue.length];
+        for (int i = 0; i < kaantoAlue.length; i++) {
+            for (int j = 0; j < kaantoAlue.length; j++) {
+                kaannetytRuudut[j][i] = kaantoAlue[kaantoAlue.length - 1 - i][j];
+            }
+        }
+        return kaannetytRuudut;
+    }
+
+    public void kaannaMyotapaivaanRuudukossa() {
         Ruutu[][] kaannetytRuudut = new Ruutu[kaantoAlue.length][kaantoAlue.length];
         for (int i = 0; i < kaantoAlue.length; i++) {
             for (int j = 0; j < kaantoAlue.length; j++) {
@@ -81,6 +91,16 @@ public class Palikka {
             ruudukko.paivitaRuudukko(sijainti, kaantoAlue);
             paivitaPutoamisKohta();
         }
+    }
+
+    public Ruutu[][] kaannaMyotapaivaan() {
+        Ruutu[][] kaannetytRuudut = new Ruutu[kaantoAlue.length][kaantoAlue.length];
+        for (int i = 0; i < kaantoAlue.length; i++) {
+            for (int j = 0; j < kaantoAlue.length; j++) {
+                kaannetytRuudut[kaantoAlue.length - 1 - i][j] = kaantoAlue[j][i];
+            }
+        }
+        return kaannetytRuudut;
     }
 
     //asettaa kohtaan johon palikka lopulta putoaisi harmaita tyhjia ruutuja
@@ -101,8 +121,21 @@ public class Palikka {
         if(putoamisKohdanSijainti[1] - sijainti[1] >= kaantoAlue.length) {
             ruudukko.asetaPutoamisKohtaPalikka(putoamisKohdanSijainti, kaantoAlue);
         }
+    }
 
-        //TODO bugi, ei toimi
+    public int[][] kaantoAlueNumeroina() {
+        int[][] numeroAlue = new int[kaantoAlue.length][kaantoAlue.length];
+        for (int i = 0; i < kaantoAlue.length; i++) {
+            for (int j = 0; j < kaantoAlue.length; j++) {
+                if(kaantoAlue[j][i].onkoTaynna()) {
+                    numeroAlue[j][i] = 1;
+                }
+                else {
+                    numeroAlue[j][i] = 0;
+                }
+            }
+        }
+        return numeroAlue;
     }
 
     public Ruudukko annaRuudukko() {
@@ -119,6 +152,10 @@ public class Palikka {
 
     public Ruutu[][] annaKaantoAlue() {
         return kaantoAlue;
+    }
+
+    public void asetaKaantoAlue(Ruutu[][] kaantoAlue) {
+        this.kaantoAlue = kaantoAlue;
     }
 
     public int[] annaPutoamisKohdanSijainti() {
