@@ -33,7 +33,7 @@ public class Ruudukko {
 
         if(x >= ruudut.length || x < 0) {
             throw new IndexOutOfBoundsException();
-        } else if(y >= ruudut.length || y < 0) {
+        } else if(y >= ruudut[0].length || y < 0) {
             throw new IndexOutOfBoundsException();
         }
 

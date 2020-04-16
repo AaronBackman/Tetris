@@ -150,6 +150,10 @@ public class Palikka {
         return sijainti;
     }
 
+    public void asetaSijainti(int[] sijainti) {
+        this.sijainti = sijainti;
+    }
+
     public Ruutu[][] annaKaantoAlue() {
         return kaantoAlue;
     }
