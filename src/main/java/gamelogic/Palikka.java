@@ -118,7 +118,7 @@ public class Palikka {
         //nostaa yhdella ylospain, koska tassa vaiheessa while ehto ei enaa toteutunut
         putoamisKohdanSijainti[1] -= 1;
 
-        if(putoamisKohdanSijainti[1] - sijainti[1] >= kaantoAlue.length) {
+        if(putoamisKohdanSijainti[1] - sijainti[1] >= 0) {
             ruudukko.asetaPutoamisKohtaPalikka(putoamisKohdanSijainti, kaantoAlue);
         }
     }

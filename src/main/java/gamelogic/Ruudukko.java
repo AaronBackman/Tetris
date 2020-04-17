@@ -183,7 +183,7 @@ public class Ruudukko {
 
         for(int i=0; i<palikkaAlue.length; i++) {
             for(int j=0; j<palikkaAlue.length; j++) {
-                if(palikkaAlue[j][i].onkoTaynna()) {
+                if(palikkaAlue[j][i].onkoTaynna() && ruudut[x + j][y + i].annaPutoaminen() == false) {
                     //asettaa palikkaAluetta vastaavan ruudun ruudukossa harmaaksi
                     ruudut[x + j][y + i] = rt.teePutoamisKohtaRuutu();
                 }
