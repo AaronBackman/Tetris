@@ -32,8 +32,8 @@ class PalikkaTest {
             }
         }
 
-        sijainti = new int[]{7,7};
-        ruudukko.annaRuudut()[kaantoAlue.length - 1 + sijainti[0]][kaantoAlue.length - 1 + sijainti[1]].asetaTaynna(true);
+        sijainti = new int[]{7,3};
+        ruudukko.annaRuudut()[kaantoAlue.length + sijainti[0]][kaantoAlue.length + sijainti[1]].asetaTaynna(true);
         ruudukko.paivitaRuudukko(sijainti, kaantoAlue);
         for(int i=0; i<kaantoAlue.length; i++) {
             for(int j=0; j<kaantoAlue.length; j++) {

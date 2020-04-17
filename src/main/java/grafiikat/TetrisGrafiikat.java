@@ -23,6 +23,9 @@ import java.util.LinkedList;
 public class TetrisGrafiikat extends Application {
     private MediaPlayer soitin;
     private Slider musiikkiSlideri;
+
+    //valitsee naytetaanko haamupalikka pelissa
+    private final HaamuKytkinNappi haamuKytkinNappi = new HaamuKytkinNappi();
     private boolean tauko;
     private Peli peli;
     private Stage paaIkkuna;
@@ -102,6 +105,7 @@ public class TetrisGrafiikat extends Application {
 
             if (tauko == false) {
                 if (peli.onkoPeliKaynnissa()) {
+                    peli.annaPutoavaPalikka().asetaNaytaHaamuPalikka(haamuKytkinNappi.annaTila());
                     peli.seuraavaFrame();
 
                     piirraPeli();
@@ -345,13 +349,16 @@ public class TetrisGrafiikat extends Application {
         ikkunanKorkeusNappi.setMaxSize(250, 60);
         ikkunanKorkeusNappi.setStyle("-fx-font-size:20");
 
-        valikko.getChildren().addAll(ikkunanLeveysNappi, ikkunanKorkeusNappi);
+        valikko.getChildren().addAll(ikkunanLeveysNappi, ikkunanKorkeusNappi, haamuKytkinNappi);
 
         Button muutostenVahvistusNappi = new Button("Vahvista Muutokset");
         muutostenVahvistusNappi.setPrefSize(250, 60);
         muutostenVahvistusNappi.setStyle("-fx-font-size:20");
         muutostenVahvistusNappi.setOnAction(tapahtuma -> {
-            this.leveys = Integer.parseInt(ikkunanLeveysNappi.getText());
+            if(ikkunanLeveysNappi.getText().equals("") == false){
+                this.leveys = Integer.parseInt(ikkunanLeveysNappi.getText());
+            }
+            if(ikkunanKorkeusNappi.getText().equals("") == false)
             this.korkeus = Integer.parseInt(ikkunanKorkeusNappi.getText());
 
             //piirtaa asetusikkunan uuden kokoisena

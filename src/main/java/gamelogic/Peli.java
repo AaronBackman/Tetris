@@ -1,5 +1,7 @@
 package gamelogic;
 
+import grafiikat.HaamuKytkinNappi;
+
 import java.util.LinkedList;
 
 public class Peli {
@@ -57,7 +59,11 @@ public class Peli {
             pisteet += pelinTila.poistaTaydetRuudut();
 
             seuraavatPalikat.add(new PalikkaTehdas().teeSatunnainenPalikka(pelinTila));
+
+            //asettaa haamupalikan nayttamisen seuraavalle palikalla samaksi kuin edellisella palikalla
+            boolean naytaHaamuPalikka = putoavaPalikka.annaNaytaHaamuPalikka();
             putoavaPalikka = seuraavatPalikat.poll();
+            putoavaPalikka.asetaNaytaHaamuPalikka(naytaHaamuPalikka);
             putoavaPalikka.asetaRuudukolle();
         }
     }
@@ -77,4 +83,9 @@ public class Peli {
     public LinkedList<Palikka> annaSeuraavatPalikat() {
         return seuraavatPalikat;
     }
+
+    public Palikka annaPutoavaPalikka() {
+        return putoavaPalikka;
+    }
+
 }

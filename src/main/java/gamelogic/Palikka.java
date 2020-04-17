@@ -6,6 +6,7 @@ public class Palikka {
     protected int[] sijainti; //kaantoAlueen indeksin[0][0] sijainti koko laudalla alkaen vasemmasta ylakulmasta,x,y
     protected int[] putoamisKohdanSijainti = new int[2]; //sama kuin ylla
     protected boolean onkoPutoamassa = true;
+    protected boolean naytaHaamupalikka = true;
 
     public void pudotaYksiRuutu() {
         sijainti[1] += 1;
@@ -106,7 +107,10 @@ public class Palikka {
     //asettaa kohtaan johon palikka lopulta putoaisi harmaita tyhjia ruutuja
     private void paivitaPutoamisKohta() {
         ruudukko.poistaPutoamisKohtaPalikka(putoamisKohdanSijainti, kaantoAlue);
-
+        if(naytaHaamupalikka == false) {
+            //metodi ei saa tehda mitaan tassa tapauksessa, muuta kuin poistaa vanhan haamupalikan(jos edes olemassa)
+            return;
+        }
         putoamisKohdanSijainti[0] = sijainti[0];
         putoamisKohdanSijainti[1] = sijainti[1];
 
@@ -164,5 +168,13 @@ public class Palikka {
 
     public int[] annaPutoamisKohdanSijainti() {
         return putoamisKohdanSijainti;
+    }
+
+    public void asetaNaytaHaamuPalikka(boolean naytaHaamupalikka) {
+        this.naytaHaamupalikka = naytaHaamupalikka;
+    }
+
+    public boolean annaNaytaHaamuPalikka() {
+        return naytaHaamupalikka;
     }
 }
