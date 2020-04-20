@@ -36,7 +36,7 @@ public class Peli {
                 putoavaPalikka.pudotaYksiRuutu();
                 break;
             case "vastaPaivaan":
-                putoavaPalikka.kaannaVastapaivaan();
+                putoavaPalikka.kaannaVastapaivaanRuudukossa();
                 break;
             case "myotaPaivaan":
                 putoavaPalikka.kaannaMyotapaivaanRuudukossa();
