@@ -1,4 +1,4 @@
-image: tomsontom/oracle-java8-mvn:3
+image: kaiwinter/docker-java8-maven
 
 stages:
     - build
