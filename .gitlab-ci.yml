@@ -3,8 +3,8 @@ stages:
 - build
 - test
 build:
-script:
-- mvn compile
+  script:
+    - mvn compile
 test:
-script:
-- mvn test
+  script:
+    - mvn test
