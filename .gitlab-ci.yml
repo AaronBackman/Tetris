@@ -1,4 +1,4 @@
-maven: 3-jdk-8
+image: tomsontom/oracle-java8-mvn:3
 
 stages:
     - build
