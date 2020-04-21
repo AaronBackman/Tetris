@@ -1,7 +1,7 @@
 image: maven:latest
 stages:
-- build
-- test
+  - build
+  - test
 build:
   script:
     - mvn compile
