@@ -21,7 +21,7 @@ class PalikkaTest {
     //tarkistaa vain tapauksen jossa paivityksen pitaisi onnistua, toinen metodi tarkistaa onko se mahdollista
     @Test
     public void paivitaRuudukkoTesti() {
-        Ruutu[][] kaantoAlue = palikka.annaKaantoAlue();
+        Ruutu[][] kaantoAlue = palikka.annaPalikanMuoto();
 
         int[] sijainti = new int[]{10,10};
         ruudukko.paivitaRuudukko(sijainti, kaantoAlue);
@@ -124,9 +124,9 @@ class PalikkaTest {
                 {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I}
         });
         palikka = new Ipalikka(ruudukko);
-        assertFalse(ruudukko.voikoPaivittaa(new int[]{10,17}, palikka.annaKaantoAlue()));//kohdassa on jo palikoita
-        assertFalse(ruudukko.voikoPaivittaa(new int[]{14,18}, palikka.annaKaantoAlue()));//reuna-alueella
-        assertTrue(ruudukko.voikoPaivittaa(new int[]{10,16}, palikka.annaKaantoAlue()));//kohta on tyhja
+        assertFalse(ruudukko.voikoPaivittaa(new int[]{10,17}, palikka.annaPalikanMuoto()));//kohdassa on jo palikoita
+        assertFalse(ruudukko.voikoPaivittaa(new int[]{14,18}, palikka.annaPalikanMuoto()));//reuna-alueella
+        assertTrue(ruudukko.voikoPaivittaa(new int[]{10,16}, palikka.annaPalikanMuoto()));//kohta on tyhja
     }
 
     @Test

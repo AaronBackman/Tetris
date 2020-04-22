@@ -1,16 +1,31 @@
 package gamelogic;
 
-import grafiikat.HaamuKytkinNappi;
-
 import java.util.LinkedList;
 
+/**
+ * sisaltaa koko tetris pelin loogisen puolen
+ */
 public class Peli {
-    private Ruudukko pelinTila;
+    /**
+     * sisaltaa datan pelin ruutujen tilasta
+     */
+    private final Ruudukko pelinTila;
+
+    /**
+     * sisaltaa nykyisen putoavan palikan jalkeiset seuraavat kolme putoavaa palikkaa
+     */
     private LinkedList<Palikka> seuraavatPalikat;
+
+    /**
+     * nykyinen putoamassa oleva palikka (vain yksi kerrallaan)
+     */
     private Palikka putoavaPalikka;
     private boolean peliKaynnissa;
     private int pisteet;
 
+    /**
+     * asettaa pelille tyhjan ruudukon, satunnaisen putoavan palikan ja sita seuraavat 3 palikkaa
+     */
     public Peli() {
         this.pelinTila = new Ruudukko();
         this.putoavaPalikka = new PalikkaTehdas().teeSatunnainenPalikka(pelinTila);
@@ -23,6 +38,11 @@ public class Peli {
         this.peliKaynnissa = true;
     }
 
+    /**
+     * ottaa syotteen string muodossa ja liikuttaa palikkaa sen mukaisesti
+     * taman metodin avulla nappainten painamiset voi muuntaa helppoon muotoon ja syotta tahan metodiin
+     * @param input syote string muodossa
+     */
     public void otaInputti(String input) {
 
         switch (input) {
@@ -47,12 +67,17 @@ public class Peli {
         }
     }
 
+    /**
+     * mallintaa yhden askeleen palikan pelaajasta riippumattomassa putoamisessa alaspain
+     * hoitaa siihen liittyvat tarkistukse: kuten onko peli havitty tai onko palikka pudonnut
+     * ja tarvitaan uusi putoava palikka
+     */
     public void seuraavaFrame() {
         putoavaPalikka.pudotaYksiRuutu();
         if(! putoavaPalikka.onkoPutoamassa) {
 
             //tarkistaa onko pudonnut palikka ruudun ulkopuolella (==peli havitty)
-            if(annaRuudukko().onkoPalikkaRuudunUlkopuolella(putoavaPalikka.annaSijainti(), putoavaPalikka.annaKaantoAlue())) {
+            if(annaRuudukko().onkoPalikkaRuudukonUlkopuolella(putoavaPalikka.annaSijainti(), putoavaPalikka.annaPalikanMuoto())) {
                 this.peliKaynnissa = false;
             }
 
@@ -68,22 +93,37 @@ public class Peli {
         }
     }
 
+    /**
+     * @return ruudukko joka sisaltaa tiedon pelin ruuduista
+     */
     public Ruudukko annaRuudukko() {
         return pelinTila;
     }
 
+    /**
+     * @return true jos peli on kaynnissa
+     */
     public boolean onkoPeliKaynnissa() {
         return peliKaynnissa;
     }
 
+    /**
+     * @return pelaajalle kertynyt pistemaara
+     */
     public int annaPisteet() {
         return pisteet;
     }
 
+    /**
+     * @return nykyisen putoavan palikan jalkeen putoavat palikat
+     */
     public LinkedList<Palikka> annaSeuraavatPalikat() {
         return seuraavatPalikat;
     }
 
+    /**
+     * @return nykyinen putoava palikka
+     */
     public Palikka annaPutoavaPalikka() {
         return putoavaPalikka;
     }

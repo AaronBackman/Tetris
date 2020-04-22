@@ -2,8 +2,16 @@ package gamelogic;
 
 import java.util.Random;
 
+/**
+ * kaytetaan palikoiden luomiseen
+ */
 public class PalikkaTehdas {
 
+    /**
+     * tekee satunnaisia palikoita
+     * @param ruudukko johon tehty palikka asetetaan
+     * @return tehty palikka
+     */
     public Palikka teeSatunnainenPalikka(Ruudukko ruudukko) {
         Random r = new Random();
         int n = r.nextInt(7);

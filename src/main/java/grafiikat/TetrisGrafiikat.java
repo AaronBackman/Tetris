@@ -20,23 +20,53 @@ import javafx.util.Duration;
 import java.io.File;
 import java.util.LinkedList;
 
+/**
+ * mallintaa tetris pelin graafisen puolen javafx:lla, sisaltaa myos aanet
+ */
 public class TetrisGrafiikat extends Application {
     private MediaPlayer soitin;
     private Slider musiikkiSlideri;
 
-    //valitsee naytetaanko haamupalikka pelissa
+    /**
+     * valitsee naytetaanko haamupalikka pelissa
+     */
     private final HaamuKytkinNappi haamuKytkinNappi = new HaamuKytkinNappi();
+
+    /**
+     * onko peli kaynnissa vai tauolla
+     */
     private boolean tauko;
     private Peli peli;
     private Stage paaIkkuna;
     private Timeline ajastin;
+
+    /**
+     * ikkunan taustaVari
+     */
     private final Color taustaVari = Color.TEAL;
+
+    /**
+     * ikkunan leveys
+     */
     private int leveys = 800;
+
+    /**
+     * ikkunan korkeus
+     */
     private int korkeus = 650;
 
+    /**
+     * ohjelman kaynnistyttya kutsuu Application luokan launch metodia
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }
+
+    /**
+     * ohjelman osa joka suoritetaan kaynnistyksen jalkeen suoraan main metodista
+     * @param paaIkkuna ohjelman ikkuna
+     */
     @Override
     public void start(Stage paaIkkuna) {
         this.paaIkkuna = paaIkkuna;
@@ -50,6 +80,9 @@ public class TetrisGrafiikat extends Application {
         paaValikko();
     }
 
+    /**
+     * piirtaa ohjelman paavalikon
+     */
     private void paaValikko() {
         Label otsikko = new Label("TETRIS");
         otsikko.setPrefSize(200, 50);
@@ -64,7 +97,7 @@ public class TetrisGrafiikat extends Application {
         Button siirryPeliinNappi = new Button("Aloita Peli");
         siirryPeliinNappi.setOnAction(tapahtuma -> {
             this.peli = new Peli();
-            peliIkkuna();
+            suoritaPeli();
         });
         siirryPeliinNappi.setPrefSize(200, 60);
         siirryPeliinNappi.setStyle("-fx-font-size:25");
@@ -97,7 +130,11 @@ public class TetrisGrafiikat extends Application {
         paaIkkuna.show();
     }
 
-    private void peliIkkuna() {
+    /**
+     * sisaltaa loopin jossa pelin piirtaminen ja logiikkapuoli suoritetaan
+     * tietyin aikavalein tai kayttajan syotteesta
+     */
+    private void suoritaPeli() {
         tauko = false;
         //millisekunteina
         final double kierroksenKesto = 1000;
@@ -108,7 +145,7 @@ public class TetrisGrafiikat extends Application {
                     peli.annaPutoavaPalikka().asetaNaytaHaamuPalikka(haamuKytkinNappi.annaTila());
                     peli.seuraavaFrame();
 
-                    piirraPeli();
+                    peliIkkuna();
                 }
 
                 if (peli.onkoPeliKaynnissa() == false) {
@@ -134,7 +171,10 @@ public class TetrisGrafiikat extends Application {
         ajastin.play();
     }
 
-    private void piirraPeli() {
+    /**
+     * piirtaa ikkunan johon tulee erilaisia nappeja ja ruudukko joka vastaa pelin loogisen puolen ruudukkoa
+     */
+    private void peliIkkuna() {
 
         GridPane ruudukko = teePeliRuudukko();
 
@@ -194,13 +234,15 @@ public class TetrisGrafiikat extends Application {
 
             }
 
-            piirraPeli();
+            peliIkkuna();
         });
 
         paaIkkuna.show();
     }
 
-    //tekee gridpane tyyppisen ruudukon joka voidaan piirtaa peli ikkunassa
+    /**
+     *mallintaa pelin ruudukon graafisesti
+     */
     private GridPane teePeliRuudukko() {
         GridPane ruudukko = new GridPane();
         ruudukko.setHgap(5);
@@ -234,7 +276,10 @@ public class TetrisGrafiikat extends Application {
         return ruudukko;
     }
 
-    //palauttaa seuraavat palikat pystysuoraan omissa gridpane ruudukoissaan
+    /**
+     * mallintaa seuraavaksi putoavat palikat graafisesti
+     * @return seuraavat palikat pystysuoraan omissa gridpane ruudukoissaan
+     */
     private VBox naytaSeuraavatPalikat() {
         LinkedList<Palikka> seuraavatPalikat = peli.annaSeuraavatPalikat();
 
@@ -244,7 +289,7 @@ public class TetrisGrafiikat extends Application {
             GridPane palikkaRuudukko = new GridPane();
 
             //palikan pisimman sivun pituus, esim L palikka: pituus = 3
-            int palikanPituus = palikka.annaKaantoAlue().length;
+            int palikanPituus = palikka.annaPalikanMuoto().length;
             //suurimman palikan (I palikka) suurimman sivun pituus
             final int maxPalikanPituus = 4;
             int ruudunKoko = 20;
@@ -263,7 +308,7 @@ public class TetrisGrafiikat extends Application {
                         vari = new RuutuTehdas().teeTyhjaRuutu().annaVariMerkkijonona();
                     }
                     else {
-                        vari = palikka.annaKaantoAlue()[sarake][rivi].annaVariMerkkijonona();
+                        vari = palikka.annaPalikanMuoto()[sarake][rivi].annaVariMerkkijonona();
                     }
 
                     ruutu.setStyle("-fx-background-color: " + vari + ";");
@@ -284,11 +329,15 @@ public class TetrisGrafiikat extends Application {
         return palikat;
     }
 
+    /**
+     * tekee taukovalikon, johon paasee pelista
+     * sielta voi palata peliin, muuttaa asetuksia tai voi lopettaa pelin
+     */
     private void taukoValikko() {
         Button jatkaNappi = new Button("Jatka Peliä");
         jatkaNappi.setOnAction(tapahtuma -> {
             tauko = false;
-            peliIkkuna();
+            suoritaPeli();
         });
         jatkaNappi.setPrefSize(200, 60);
         jatkaNappi.setStyle("-fx-font-size:25");
@@ -310,7 +359,7 @@ public class TetrisGrafiikat extends Application {
         Button uusiPeliNappi = new Button("Uusi Peli");
         uusiPeliNappi.setOnAction(tapahtuma -> {
             this.peli = new Peli();
-            peliIkkuna();
+            suoritaPeli();
         });
         uusiPeliNappi.setPrefSize(200, 60);
         uusiPeliNappi.setStyle("-fx-font-size:25");
@@ -333,6 +382,10 @@ public class TetrisGrafiikat extends Application {
         paaIkkuna.show();
     }
 
+    /**
+     * mallintaa graafisesti asetusvalikon
+     * @param onkoPelissa jos on pelissa tulee vaihtoehto palata peliin
+     */
     private void asetuksetIkkuna(boolean onkoPelissa) {
         VBox valikko = new VBox();
         valikko.setAlignment(Pos.TOP_CENTER);
@@ -407,6 +460,9 @@ public class TetrisGrafiikat extends Application {
         paaIkkuna.show();
     }
 
+    /**
+     * valikko joka naytetaan kun peli on havitty
+     */
     private void peliLoppuValikko() {
         GridPane ruudukko = teePeliRuudukko();
 
@@ -425,7 +481,7 @@ public class TetrisGrafiikat extends Application {
         Button uusiPeliNappi = new Button("Uusi Peli");
         uusiPeliNappi.setOnAction(tapahtuma -> {
             this.peli = new Peli();
-            peliIkkuna();
+            suoritaPeli();
         });
         uusiPeliNappi.setPrefSize(200, 60);
         uusiPeliNappi.setStyle("-fx-font-size:25");
@@ -449,10 +505,17 @@ public class TetrisGrafiikat extends Application {
         paaIkkuna.setScene(new Scene(root, leveys, korkeus));
     }
 
+    /**
+     * sammuttaa koko sovelluksen
+     */
     private void sammutaOhjelma() {
         paaIkkuna.close();
     }
 
+    /**
+     * tekee saatimen joka muuttaa aanenvoimakkuutta
+     * @return aanenvoimakkuus saadin
+     */
     private Slider teeMusiikkiSlideri() {
         Slider slideri = new Slider();
         slideri.setMin(0);
@@ -475,8 +538,10 @@ public class TetrisGrafiikat extends Application {
         return slideri;
     }
 
-    //on tassa jotta garbage collector ei poistaisi sita
-    //soittaa tetris teema musiikkia
+    /**
+     * mahdollistaa tetriksen teemamusiikin soittamisen
+     * @return olio joka mahdollistaa musiikin kuulumisen
+     */
     public MediaPlayer teeSoitin() {
 
         String suhteellinenPolku = "src/main/resources/musiikki/Tetris_theme.mp3";

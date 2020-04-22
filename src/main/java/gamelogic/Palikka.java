@@ -1,32 +1,62 @@
 package gamelogic;
 
 public class Palikka {
+    /**
+     * sisaltaa kaiken tiedon pelin palikoiden tilasta
+     */
     protected Ruudukko ruudukko;
-    protected  Ruutu[][] kaantoAlue;  //alue jossa palikkaa kaannetaan
-    protected int[] sijainti; //kaantoAlueen indeksin[0][0] sijainti koko laudalla alkaen vasemmasta ylakulmasta,x,y
+
+    /**
+     * sisaltaa tiedon palikan ruutujen varista, palikan muodosta ja rotaatiosta
+     */
+    protected  Ruutu[][] palikanMuoto;
+
+    /**
+     * palikan vasemman ylakulman sijainti ruudukolla
+     * ensimmainen numero on vaaka-koordinaatti, toinen pysty-koordinaatti
+     */
+    protected int[] sijainti;
+
+    /**
+     * palikan vasemman ylakulman sijainti ruudukolla kohdassa johon se tulisi nyt putoamaan
+     * ensimmainen numero on vaaka-koordinaatti, toinen pysty-koordinaatti
+     */
     protected int[] putoamisKohdanSijainti = new int[2]; //sama kuin ylla
     protected boolean onkoPutoamassa = true;
+
+    /**
+     * haamupalikka on harmaa, saman muotoinen palikka siina kohdassa johon palikka tulisi nyt putoamaan
+     */
     protected boolean naytaHaamupalikka = true;
 
+    /**
+     * pudottaa palikkaa ruudukolla yhden ruudun
+     * paivittaa palikkaan liittyvan ruudukon ja muuttaa palikan sijaintia
+     */
     public void pudotaYksiRuutu() {
         sijainti[1] += 1;
-        if(ruudukko.voikoPaivittaa(sijainti, kaantoAlue)) {
-            ruudukko.paivitaRuudukko(sijainti, kaantoAlue);
+        if(ruudukko.voikoPaivittaa(sijainti, palikanMuoto)) {
+            ruudukko.paivitaRuudukko(sijainti, palikanMuoto);
             paivitaPutoamisKohta();
         }
         else {
             sijainti[1] -= 1;
-            ruudukko.asetaPalikkaPudonneeksi(sijainti, kaantoAlue);
+            ruudukko.asetaPalikkaPudonneeksi(sijainti, palikanMuoto);
             onkoPutoamassa = false;
         }
     }
 
-    //asettaa (uuden) palikan ruudukolle
+    /**
+     * asettaa palikan ruudukko kenttään palikan muodon ja sijainnin mukaisesti ruutuja
+     */
     public void asetaRuudukolle() {
-        ruudukko.paivitaRuudukko(sijainti, kaantoAlue);
+        ruudukko.paivitaRuudukko(sijainti, palikanMuoto);
         paivitaPutoamisKohta();
     }
 
+    /**
+     * pudottaa palikkaa kunnes se osuu johonkin ja asettaa sen sitten pudonneeksi
+     */
     public void pudotaNiinPaljonKuinMahdollista() {
         //pudottaa kunnes putoaa alas asti
         while(onkoPutoamassa) {
@@ -34,10 +64,13 @@ public class Palikka {
         }
     }
 
+    /**
+     * liikuttaa palikkaa yhden ruudun vasemmalle ruudukossa
+     */
     public void liikuVasemmalle() {
         sijainti[0] -= 1;
-        if(ruudukko.voikoPaivittaa(sijainti, kaantoAlue)) {
-            ruudukko.paivitaRuudukko(sijainti, kaantoAlue);
+        if(ruudukko.voikoPaivittaa(sijainti, palikanMuoto)) {
+            ruudukko.paivitaRuudukko(sijainti, palikanMuoto);
             paivitaPutoamisKohta();
         }
         else {
@@ -45,10 +78,13 @@ public class Palikka {
         }
     }
 
+    /**
+     * liikuttaa palikkaa yhden ruudun oikealle ruudukossa
+     */
     public void liikuOikealle() {
         sijainti[0] += 1;
-        if(ruudukko.voikoPaivittaa(sijainti, kaantoAlue)) {
-            ruudukko.paivitaRuudukko(sijainti, kaantoAlue);
+        if(ruudukko.voikoPaivittaa(sijainti, palikanMuoto)) {
+            ruudukko.paivitaRuudukko(sijainti, palikanMuoto);
             paivitaPutoamisKohta();
         }
         else {
@@ -56,57 +92,59 @@ public class Palikka {
         }
     }
 
+    /**
+     * muuttaa palikan muotoa siten etta se on kaantynut vastapaivaan, jos voi kaantya
+     * paivittaa myos palikan uuden muodon ruudukolle
+     */
     public void kaannaVastapaivaanRuudukossa() {
-        Ruutu[][] kaannetytRuudut = new Ruutu[kaantoAlue.length][kaantoAlue.length];
-        for (int i = 0; i < kaantoAlue.length; i++) {
-            for (int j = 0; j < kaantoAlue.length; j++) {
-                kaannetytRuudut[j][i] = kaantoAlue[kaantoAlue.length - 1 - i][j];
-            }
-        }
+        Ruutu[][] kaannetytRuudut = kaannaVastapaivaan();
+
         if(ruudukko.voikoPaivittaa(sijainti, kaannetytRuudut)) {
-            kaantoAlue = kaannetytRuudut;
-            ruudukko.paivitaRuudukko(sijainti, kaantoAlue);
+            palikanMuoto = kaannetytRuudut;
+            ruudukko.paivitaRuudukko(sijainti, palikanMuoto);
             paivitaPutoamisKohta();
         }
     }
 
-    public Ruutu[][] kaannaVastapaivaan() {
-        Ruutu[][] kaannetytRuudut = new Ruutu[kaantoAlue.length][kaantoAlue.length];
-        for (int i = 0; i < kaantoAlue.length; i++) {
-            for (int j = 0; j < kaantoAlue.length; j++) {
-                kaannetytRuudut[j][i] = kaantoAlue[kaantoAlue.length - 1 - i][j];
+    private Ruutu[][] kaannaVastapaivaan() {
+        Ruutu[][] kaannetytRuudut = new Ruutu[palikanMuoto.length][palikanMuoto.length];
+        for (int i = 0; i < palikanMuoto.length; i++) {
+            for (int j = 0; j < palikanMuoto.length; j++) {
+                kaannetytRuudut[j][i] = palikanMuoto[palikanMuoto.length - 1 - i][j];
             }
         }
         return kaannetytRuudut;
     }
 
+    /**
+     * muuttaa palikan muotoa siten etta se on kaantynut myotapaivaan, jos voi kaantya
+     * paivittaa myos palikan uuden muodon ruudukolle
+     */
     public void kaannaMyotapaivaanRuudukossa() {
-        Ruutu[][] kaannetytRuudut = new Ruutu[kaantoAlue.length][kaantoAlue.length];
-        for (int i = 0; i < kaantoAlue.length; i++) {
-            for (int j = 0; j < kaantoAlue.length; j++) {
-                kaannetytRuudut[kaantoAlue.length - 1 - i][j] = kaantoAlue[j][i];
-            }
-        }
+        Ruutu[][] kaannetytRuudut = kaannaMyotapaivaan();
+
         if(ruudukko.voikoPaivittaa(sijainti, kaannetytRuudut)) {
-            kaantoAlue = kaannetytRuudut;
-            ruudukko.paivitaRuudukko(sijainti, kaantoAlue);
+            palikanMuoto = kaannetytRuudut;
+            ruudukko.paivitaRuudukko(sijainti, palikanMuoto);
             paivitaPutoamisKohta();
         }
     }
 
-    public Ruutu[][] kaannaMyotapaivaan() {
-        Ruutu[][] kaannetytRuudut = new Ruutu[kaantoAlue.length][kaantoAlue.length];
-        for (int i = 0; i < kaantoAlue.length; i++) {
-            for (int j = 0; j < kaantoAlue.length; j++) {
-                kaannetytRuudut[kaantoAlue.length - 1 - i][j] = kaantoAlue[j][i];
+    private Ruutu[][] kaannaMyotapaivaan() {
+        Ruutu[][] kaannetytRuudut = new Ruutu[palikanMuoto.length][palikanMuoto.length];
+        for (int i = 0; i < palikanMuoto.length; i++) {
+            for (int j = 0; j < palikanMuoto.length; j++) {
+                kaannetytRuudut[palikanMuoto.length - 1 - i][j] = palikanMuoto[j][i];
             }
         }
         return kaannetytRuudut;
     }
 
-    //asettaa kohtaan johon palikka lopulta putoaisi harmaita tyhjia ruutuja
+    /**
+     * poistaa ensin vanhan haamupalikan, laskee uuden putoamis sijainnin ja asettaa sitten sinne haamupalikan
+     */
     private void paivitaPutoamisKohta() {
-        ruudukko.poistaPutoamisKohtaPalikka(putoamisKohdanSijainti, kaantoAlue);
+        ruudukko.poistaHaamuPalikka(putoamisKohdanSijainti, palikanMuoto);
         if(naytaHaamupalikka == false) {
             //metodi ei saa tehda mitaan tassa tapauksessa, muuta kuin poistaa vanhan haamupalikan(jos edes olemassa)
             return;
@@ -115,65 +153,77 @@ public class Palikka {
         putoamisKohdanSijainti[1] = sijainti[1];
 
         //laskee sijainnin (x,y) johon putoava palikka putoaisi, jos se pudotettaisiin alas
-        while(ruudukko.voikoPaivittaa(putoamisKohdanSijainti, kaantoAlue)) {
+        while(ruudukko.voikoPaivittaa(putoamisKohdanSijainti, palikanMuoto)) {
             //vahentaa y koordinaattia yhdella
             putoamisKohdanSijainti[1] += 1;
         }
         //nostaa yhdella ylospain, koska tassa vaiheessa while ehto ei enaa toteutunut
         putoamisKohdanSijainti[1] -= 1;
 
-        if(putoamisKohdanSijainti[1] - sijainti[1] >= 0) {
-            ruudukko.asetaPutoamisKohtaPalikka(putoamisKohdanSijainti, kaantoAlue);
+        if(putoamisKohdanSijainti[1] - sijainti[1] > 0) {
+            ruudukko.asetaHaamuPalikka(putoamisKohdanSijainti, palikanMuoto);
         }
     }
 
-    public int[][] kaantoAlueNumeroina() {
-        int[][] numeroAlue = new int[kaantoAlue.length][kaantoAlue.length];
-        for (int i = 0; i < kaantoAlue.length; i++) {
-            for (int j = 0; j < kaantoAlue.length; j++) {
-                if(kaantoAlue[j][i].onkoTaynna()) {
-                    numeroAlue[j][i] = 1;
-                }
-                else {
-                    numeroAlue[j][i] = 0;
-                }
-            }
-        }
-        return numeroAlue;
-    }
-
+    /**
+     * @return ruudukko joka sisaltaa tiedon pelin ruuduista
+     */
     public Ruudukko annaRuudukko() {
         return ruudukko;
     }
 
+    /**
+     * @param ruudukko joka kuvaa pelin ruutujen tilaa
+     */
     public void asetaRuudukko(Ruudukko ruudukko) {
         this.ruudukko = ruudukko;
     }
 
+    /**
+     * @return palikan sijainti ruudukolla, ensimmainen vaaka ja toinen pysty-koordinaatti
+     */
     public int[] annaSijainti() {
         return sijainti;
     }
 
+    /**
+     * @param sijainti ruudukolla joka asetetaan, ensimmainen vaaka, toinen pysty-koordinaatti
+     */
     public void asetaSijainti(int[] sijainti) {
         this.sijainti = sijainti;
     }
 
-    public Ruutu[][] annaKaantoAlue() {
-        return kaantoAlue;
+    /**
+     * @return tieto palikan ruuduista palikan muotoisesti
+     */
+    public Ruutu[][] annaPalikanMuoto() {
+        return palikanMuoto;
     }
 
-    public void asetaKaantoAlue(Ruutu[][] kaantoAlue) {
-        this.kaantoAlue = kaantoAlue;
+    /**
+     * @param palikanMuoto tieto palikan ruuduista palikan muotoisesti
+     */
+    public void asetaPalikanMuoto(Ruutu[][] palikanMuoto) {
+        this.palikanMuoto = palikanMuoto;
     }
 
+    /**
+     * @return palikan putoamiskohdan sijainti, ensimmainen vaaka, toinen pysty-koordinaatti
+     */
     public int[] annaPutoamisKohdanSijainti() {
         return putoamisKohdanSijainti;
     }
 
+    /**
+     * @param naytaHaamupalikka jos true haamupalikka naytetaan, muuten false
+     */
     public void asetaNaytaHaamuPalikka(boolean naytaHaamupalikka) {
         this.naytaHaamupalikka = naytaHaamupalikka;
     }
 
+    /**
+     * @return naytaHaamupalikka, jos true haamupalikka naytetaan, muuten false
+     */
     public boolean annaNaytaHaamuPalikka() {
         return naytaHaamupalikka;
     }
