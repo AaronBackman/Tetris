@@ -175,8 +175,8 @@ public class Ruudukko {
     //asettaa palikan, joka nayttaa mihin palikka putoaisi, ruutua kuvaa harmaa tyhja ruutu
     public void asetaPutoamisKohtaPalikka(int[] putoamisSijainti, Ruutu[][] palikkaAlue) {
         RuutuTehdas rt = new RuutuTehdas();
-        int x = putoamisSijainti[1];
-        int y = putoamisSijainti[0];
+        int x = putoamisSijainti[0];
+        int y = putoamisSijainti[1];
         if(y < 0) {
             return;
         }
