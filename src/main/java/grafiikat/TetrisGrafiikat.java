@@ -17,7 +17,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.File;
 import java.util.LinkedList;
 
 /**
@@ -600,14 +599,9 @@ public class TetrisGrafiikat extends Application {
      */
     public MediaPlayer teeSoitin() {
 
-        String suhteellinenPolku = "src/main/resources/musiikki/Tetris_theme.mp3";
-        Media aani = new Media(new File(suhteellinenPolku).toURI().toString());
+        Media aani = new Media(this.getClass().getResource("/musiikki/Tetris_theme.mp3").toString());
         soitin = new MediaPlayer(aani);
-        soitin.setOnEndOfMedia(new Runnable() {
-            public void run() {
-                soitin.seek(Duration.ZERO);
-            }
-        });
+        soitin.setOnEndOfMedia(() -> soitin.seek(Duration.ZERO));
         soitin.setVolume(0.5);
         return soitin;
     }
