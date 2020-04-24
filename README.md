@@ -1,5 +1,7 @@
 # Tetris
 Turun yliopiston soveltava projekti 2020 kurssin harjoitustyö
+## Tavoite
+Projektin tavoite on kehittää helppokäyttöinen ja käyttäjäystävällinen implementaatio Tetris-pelistä.
 ## Toteutus:
 Projekti ohjelmoitiin kokonaan Java ohjelmointikielellä (Java 8). Grafiikat toteutettiin JavaFx:llä. Projekti rakennettiin maven projektina.
 ## Asentaminen:
