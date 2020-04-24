@@ -597,7 +597,7 @@ public class TetrisGrafiikat extends Application {
      * mahdollistaa tetriksen teemamusiikin soittamisen
      * @return olio joka mahdollistaa musiikin kuulumisen
      */
-    public MediaPlayer teeSoitin() {
+    private MediaPlayer teeSoitin() {
 
         Media aani = new Media(this.getClass().getResource("/musiikki/Tetris_theme.mp3").toString());
         soitin = new MediaPlayer(aani);
