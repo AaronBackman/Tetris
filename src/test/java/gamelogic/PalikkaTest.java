@@ -5,11 +5,16 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//testaa palikan siirtamista ruudukolla
+/**
+ * testaa palikan siirtamista ruudukolla yksikkotesteilla
+ */
 class PalikkaTest {
     Ruudukko ruudukko;
     Palikka palikka;
 
+    /**
+     * kaytannossa konstruktori
+     */
     @BeforeEach
     public void init() {
         this.ruudukko = new Ruudukko();
@@ -18,7 +23,9 @@ class PalikkaTest {
         this.palikka = pl.teeSatunnainenPalikka(ruudukko);
     }
 
-    //tarkistaa vain tapauksen jossa paivityksen pitaisi onnistua, toinen metodi tarkistaa onko se mahdollista
+    /**
+     * tarkistaa vain tapauksen jossa paivityksen pitaisi onnistua, toinen metodi tarkistaa onko se mahdollista
+     */
     @Test
     public void paivitaRuudukkoTesti() {
         Ruutu[][] kaantoAlue = palikka.annaPalikanMuoto();
@@ -45,6 +52,9 @@ class PalikkaTest {
         }
     }
 
+    /**
+     * testaa toimiiko taysien ruutujen poistaminen ja pisteidenlasku
+     */
     @Test
     public void poistaTaydetRuudutTesti() {
         RuutuTehdas rt = new RuutuTehdas();
@@ -98,6 +108,9 @@ class PalikkaTest {
         assertEquals(pisteTulos, odotetutPisteet);
     }
 
+    /**
+     * testaa toimiiko ruudukon paivittaminen
+     */
     @Test
     public void voikoPaivittaaTesti() {
         RuutuTehdas rt = new RuutuTehdas();
@@ -129,6 +142,9 @@ class PalikkaTest {
         assertTrue(ruudukko.voikoPaivittaa(new int[]{10,16}, palikka.annaPalikanMuoto()));//kohta on tyhja
     }
 
+    /**
+     * testaa toimiiko haamupalikan asettaminen ruudukolle
+     */
     @Test
     public void haamuPalikkaTesti() {
         RuutuTehdas rt = new RuutuTehdas();
@@ -178,6 +194,10 @@ class PalikkaTest {
         assertNotSame(ruudukko.annaRuudut()[7][19].annaVari(), Vari.HARMAA);
     }
 
+    /**
+     * testaa toimiiko haamupalikan liikuttaminen ruudukolla
+     * putoavan palikan liikkeen mukaisesti
+     */
     @Test
     public void haamuPalikkaLiikeTesti() {
         RuutuTehdas rt = new RuutuTehdas();
@@ -230,6 +250,9 @@ class PalikkaTest {
         assertSame(ruudukko.annaRuudut()[9][19].annaVari(), Vari.HARMAA);
     }
 
+    /**
+     * testaa toimiiko palikan kaantaminen vastapaivaan ruudukolla
+     */
     @Test
     public void kaannyVastapaivaanTesti() {
         palikka = new Tpalikka(ruudukko);
@@ -247,6 +270,9 @@ class PalikkaTest {
         assertFalse(ruudukko.annaRuudut()[7][1].onkoTaynna());
     }
 
+    /**
+     * testaa toimiiko palikan kaantaminen myotapaivaan ruudukolla
+     */
     @Test
     public void kaannyMyotapaivaanTesti() {
         palikka = new Tpalikka(ruudukko);
@@ -264,6 +290,9 @@ class PalikkaTest {
         assertFalse(ruudukko.annaRuudut()[9][1].onkoTaynna());
     }
 
+    /**
+     * testaa toimiiko palikan pudottaminen yhden ruudun ruudukolla
+     */
     @Test
     public void pudotaYksiRuutuTesti() {
         palikka = new Opalikka(ruudukko);

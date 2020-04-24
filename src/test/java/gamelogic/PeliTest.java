@@ -4,11 +4,14 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * testaa Peli luokkaa satunnaisilla syotteilla
+ */
 class PeliTest {
 
-    //testaa ettei tule Exceptionia kelvollisilla syotteilla
+    /**
+     * testaa ettei kayttaja pysty aiheuttamaan Exceptionia kelvollisilla syotteilla
+     */
     @Test
     public void testaaSatunnaisiaSyotteita() {
         Peli peli = new Peli();

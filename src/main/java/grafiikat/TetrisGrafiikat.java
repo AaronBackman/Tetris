@@ -96,8 +96,8 @@ public class TetrisGrafiikat extends Application {
         //aloittaa uuden pelin
         Button siirryPeliinNappi = new Button("Aloita Peli");
         siirryPeliinNappi.setOnAction(tapahtuma -> {
-            this.peli = new Peli();
-            suoritaPeli();
+            //nayttaa ensin ohjeet ja sitten jatkaa sielta peliin
+            naytaOhjeet();
         });
         siirryPeliinNappi.setPrefSize(200, 60);
         siirryPeliinNappi.setStyle("-fx-font-size:25");
@@ -125,6 +125,62 @@ public class TetrisGrafiikat extends Application {
         root.setCenter(valikko);
         root.setTop(ylaRivi);
 
+
+        paaIkkuna.setScene(new Scene(root, leveys, korkeus));
+        paaIkkuna.show();
+    }
+
+    /**
+     * nayttaa pelaajalle ennen pelin alkua ohjeet liikkumisesta
+     */
+    private void naytaOhjeet() {
+        VBox liikkumiset = new VBox();
+
+        Label liikkumisnappaimet = new Label(" liikkuminen:");
+        liikkumisnappaimet.setPrefSize(300, 50);
+        liikkumisnappaimet.setStyle("-fx-font: 30 arial;");
+
+        Label vasemmalle = new Label(" A liikuttaa vasemmalle");
+        vasemmalle.setPrefSize(300, 50);
+        vasemmalle.setStyle("-fx-font: 20 arial;");
+
+        Label alas = new Label(" S liikuttaa alas");
+        alas.setPrefSize(300, 50);
+        alas.setStyle("-fx-font: 20 arial;");
+
+        Label oikealle = new Label(" D liikuttaa oikealle");
+        oikealle.setPrefSize(300, 50);
+        oikealle.setStyle("-fx-font: 20 arial;");
+
+        Label vastapaivaan = new Label(" Q kääntää vastapäivään");
+        vastapaivaan.setPrefSize(300, 50);
+        vastapaivaan.setStyle("-fx-font: 20 arial;");
+
+        Label myotapaivaan = new Label(" E kääntää myötäpäivään");
+        myotapaivaan.setPrefSize(300, 50);
+        myotapaivaan.setStyle("-fx-font: 20 arial;");
+
+        Label kokonaanAlas = new Label(" välilyönti tiputtaa kokonaan alas");
+        kokonaanAlas.setPrefSize(300, 50);
+        kokonaanAlas.setStyle("-fx-font: 20 arial;");
+
+
+        liikkumiset.getChildren().addAll(liikkumisnappaimet,vasemmalle,alas,oikealle,
+                                        vastapaivaan,myotapaivaan,kokonaanAlas);
+
+        Button jatkaPeliin = new Button("Ymmärrän ohjeet");
+        jatkaPeliin.setPrefSize(200, 50);
+        jatkaPeliin.setStyle("-fx-font: 20 arial;");
+        jatkaPeliin.setOnAction(tapahtuma -> {
+            this.peli = new Peli();
+            suoritaPeli();
+        });
+        BorderPane.setAlignment(jatkaPeliin, Pos.BOTTOM_RIGHT);
+
+        BorderPane root = new BorderPane();
+        root.setLeft(liikkumiset);
+        root.setRight(jatkaPeliin);
+        root.setBackground(new Background(new BackgroundFill(taustaVari, CornerRadii.EMPTY, Insets.EMPTY)));
 
         paaIkkuna.setScene(new Scene(root, leveys, korkeus));
         paaIkkuna.show();
