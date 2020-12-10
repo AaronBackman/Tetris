@@ -99,7 +99,7 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>gamelogic.Palikka</li>
+<li>gamelogic.Block</li>
 </ul>
 </li>
 </ul>
@@ -135,7 +135,7 @@ extends java.lang.Object</pre>
 <tr class="altColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Palikka.html#naytaHaamupalikka">naytaHaamupalikka</a></span></code>
-<div class="block">haamupalikka on harmaa, saman muotoinen palikka siina kohdassa johon palikka tulisi nyt putoamaan</div>
+<div class="block">haamupalikka on harmaa, saman muotoinen block siina kohdassa johon block tulisi nyt putoamaan</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -157,7 +157,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="../gamelogic/Ruudukko.html" title="class in gamelogic">Ruudukko</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Palikka.html#ruudukko">ruudukko</a></span></code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Palikka.html#grid">grid</a></span></code>
 <div class="block">sisaltaa kaiken tiedon pelin palikoiden tilasta</div>
 </td>
 </tr>
@@ -226,16 +226,16 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Palikka.html#asetaPalikanMuoto-gamelogic.Ruutu:A:A-">asetaPalikanMuoto</a></span>(<a href="../gamelogic/Ruutu.html" title="class in gamelogic">Ruutu</a>[][]&nbsp;palikanMuoto)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Palikka.html#asetaPalikanMuoto-gamelogic.Square:A:A-">asetaPalikanMuoto</a></span>(<a href="../gamelogic/Ruutu.html" title="class in gamelogic">Ruutu</a>[][]&nbsp;palikanMuoto)</code>&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Palikka.html#asetaRuudukko-gamelogic.Ruudukko-">asetaRuudukko</a></span>(<a href="../gamelogic/Ruudukko.html" title="class in gamelogic">Ruudukko</a>&nbsp;ruudukko)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Palikka.html#asetaRuudukko-gamelogic.Grid-">asetaRuudukko</a></span>(<a href="../gamelogic/Ruudukko.html" title="class in gamelogic">Ruudukko</a>&nbsp;grid)</code>&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Palikka.html#asetaRuudukolle--">asetaRuudukolle</a></span>()</code>
-<div class="block">asettaa palikan ruudukko kenttään palikan muodon ja sijainnin mukaisesti ruutuja</div>
+<div class="block">asettaa palikan grid kenttään palikan muodon ja sijainnin mukaisesti ruutuja</div>
 </td>
 </tr>
 <tr id="i9" class="rowColor">
@@ -317,13 +317,13 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="ruudukko">
+<a name="grid">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>ruudukko</h4>
-<pre>protected&nbsp;<a href="../gamelogic/Ruudukko.html" title="class in gamelogic">Ruudukko</a> ruudukko</pre>
+<h4>grid</h4>
+<pre>protected&nbsp;<a href="../gamelogic/Ruudukko.html" title="class in gamelogic">Ruudukko</a> grid</pre>
 <div class="block">sisaltaa kaiken tiedon pelin palikoiden tilasta</div>
 </li>
 </ul>
@@ -375,7 +375,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>naytaHaamupalikka</h4>
 <pre>protected&nbsp;boolean naytaHaamupalikka</pre>
-<div class="block">haamupalikka on harmaa, saman muotoinen palikka siina kohdassa johon palikka tulisi nyt putoamaan</div>
+<div class="block">haamupalikka on harmaa, saman muotoinen block siina kohdassa johon block tulisi nyt putoamaan</div>
 </li>
 </ul>
 </li>
@@ -421,7 +421,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>asetaRuudukolle</h4>
 <pre>public&nbsp;void&nbsp;asetaRuudukolle()</pre>
-<div class="block">asettaa palikan ruudukko kenttään palikan muodon ja sijainnin mukaisesti ruutuja</div>
+<div class="block">asettaa palikan grid kenttään palikan muodon ja sijainnin mukaisesti ruutuja</div>
 </li>
 </ul>
 <a name="pudotaNiinPaljonKuinMahdollista--">
@@ -513,7 +513,7 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;<a href="../gamelogic/Ruudukko.html" title="class in gamelogic">Ruudukko</a>&nbsp;annaRuudukko()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>ruudukko joka sisaltaa tiedon pelin ruuduista</dd>
+<dd>grid joka sisaltaa tiedon pelin ruuduista</dd>
 </dl>
 </li>
 </ul>
@@ -523,10 +523,10 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>asetaRuudukko</h4>
-<pre>public&nbsp;void&nbsp;asetaRuudukko(<a href="../gamelogic/Ruudukko.html" title="class in gamelogic">Ruudukko</a>&nbsp;ruudukko)</pre>
+<pre>public&nbsp;void&nbsp;asetaRuudukko(<a href="../gamelogic/Ruudukko.html" title="class in gamelogic">Ruudukko</a>&nbsp;grid)</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>ruudukko</code> - joka kuvaa pelin ruutujen tilaa</dd>
+<dd><code>grid</code> - joka kuvaa pelin ruutujen tilaa</dd>
 </dl>
 </li>
 </ul>

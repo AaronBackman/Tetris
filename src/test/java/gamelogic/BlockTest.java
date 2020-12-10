@@ -8,19 +8,19 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * testaa palikan siirtamista ruudukolla yksikkotesteilla
  */
-class PalikkaTest {
-    Ruudukko ruudukko;
-    Palikka palikka;
+class BlockTest {
+    Grid grid;
+    Block block;
 
     /**
      * kaytannossa konstruktori
      */
     @BeforeEach
     public void init() {
-        this.ruudukko = new Ruudukko();
+        this.grid = new Grid();
 
-        PalikkaTehdas pl = new PalikkaTehdas();
-        this.palikka = pl.teeSatunnainenPalikka(ruudukko);
+        BlockFactory pl = new BlockFactory();
+        this.block = pl.makeRandomBlock(grid);
     }
 
     /**
@@ -28,25 +28,25 @@ class PalikkaTest {
      */
     @Test
     public void paivitaRuudukkoTesti() {
-        Ruutu[][] kaantoAlue = palikka.annaPalikanMuoto();
+        Square[][] kaantoAlue = block.getShape();
 
         int[] sijainti = new int[]{10,10};
-        ruudukko.paivitaRuudukko(sijainti, kaantoAlue);
+        grid.updateGrid(sijainti, kaantoAlue);
         for(int i=0; i<kaantoAlue.length; i++) {
             for(int j=0; j<kaantoAlue.length; j++) {
                 //tarkistaa ovatko palikan ruudut ja paivitettava kohta molemmat taynna
-                assertEquals(kaantoAlue[j][i], ruudukko.annaRuudut()[j+sijainti[0]][i+sijainti[1]]);
+                assertEquals(kaantoAlue[j][i], grid.getSquares()[j+sijainti[0]][i+sijainti[1]]);
             }
         }
 
         sijainti = new int[]{7,3};
-        ruudukko.annaRuudut()[kaantoAlue.length + sijainti[0]][kaantoAlue.length + sijainti[1]].asetaTaynna(true);
-        ruudukko.paivitaRuudukko(sijainti, kaantoAlue);
+        grid.getSquares()[kaantoAlue.length + sijainti[0]][kaantoAlue.length + sijainti[1]].setFull(true);
+        grid.updateGrid(sijainti, kaantoAlue);
         for(int i=0; i<kaantoAlue.length; i++) {
             for(int j=0; j<kaantoAlue.length; j++) {
                 //tarkistaa ovatko palikan ruudut ja paivitettava kohta molemmat taynna
-                if(kaantoAlue[j][i].onkoTaynna()) {
-                    assertEquals(kaantoAlue[j][i], ruudukko.annaRuudut()[j+sijainti[0]][i+sijainti[1]]);
+                if(kaantoAlue[j][i].isFull()) {
+                    assertEquals(kaantoAlue[j][i], grid.getSquares()[j+sijainti[0]][i+sijainti[1]]);
                 }
             }
         }
@@ -57,11 +57,11 @@ class PalikkaTest {
      */
     @Test
     public void poistaTaydetRuudutTesti() {
-        RuutuTehdas rt = new RuutuTehdas();
-        Ruutu I = rt.teeReunaRuutu();
-        Ruutu O = rt.teeTyhjaRuutu();
+        SquareFactory rt = new SquareFactory();
+        Square I = rt.createBorderSquare();
+        Square O = rt.createEmptySquare();
         //uusi ruudukko, jossa on 2 taytta rivia, tarkoituksena poistaa taydet rivit ja laskea pisteet
-        ruudukko.asetaRuudut(new Ruutu[][]{
+        grid.setSquares(new Square[][]{
                 {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
                 {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
                 {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
@@ -82,28 +82,28 @@ class PalikkaTest {
                 {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I}
         });
 
-        int pisteTulos = ruudukko.poistaTaydetRuudut();
+        int pisteTulos = grid.removeFullSquares();
         int odotetutPisteet = 100; //kaksi poistettua rivia -> 100 pistetta
 
-        assertFalse(ruudukko.annaRuudut()[6][20].onkoTaynna());
-        assertFalse(ruudukko.annaRuudut()[6][21].onkoTaynna());
+        assertFalse(grid.getSquares()[6][20].isFull());
+        assertFalse(grid.getSquares()[6][21].isFull());
 
-        assertFalse(ruudukko.annaRuudut()[12][18].onkoTaynna());
-        assertFalse(ruudukko.annaRuudut()[12][19].onkoTaynna());
+        assertFalse(grid.getSquares()[12][18].isFull());
+        assertFalse(grid.getSquares()[12][19].isFull());
 
-        assertFalse(ruudukko.annaRuudut()[11][18].onkoTaynna());
-        assertFalse(ruudukko.annaRuudut()[11][19].onkoTaynna());
+        assertFalse(grid.getSquares()[11][18].isFull());
+        assertFalse(grid.getSquares()[11][19].isFull());
 
-        assertTrue(ruudukko.annaRuudut()[11][20].onkoTaynna());
-        assertTrue(ruudukko.annaRuudut()[12][20].onkoTaynna());
+        assertTrue(grid.getSquares()[11][20].isFull());
+        assertTrue(grid.getSquares()[12][20].isFull());
 
         //reunaruutuja ei saa poistaa
-        assertTrue(ruudukko.annaRuudut()[2][20].onkoTaynna());
-        assertTrue(ruudukko.annaRuudut()[2][21].onkoTaynna());
-        assertTrue(ruudukko.annaRuudut()[6][22].onkoTaynna());
-        assertTrue(ruudukko.annaRuudut()[6][23].onkoTaynna());
-        assertTrue(ruudukko.annaRuudut()[6][24].onkoTaynna());
-        assertTrue(ruudukko.annaRuudut()[6][25].onkoTaynna());
+        assertTrue(grid.getSquares()[2][20].isFull());
+        assertTrue(grid.getSquares()[2][21].isFull());
+        assertTrue(grid.getSquares()[6][22].isFull());
+        assertTrue(grid.getSquares()[6][23].isFull());
+        assertTrue(grid.getSquares()[6][24].isFull());
+        assertTrue(grid.getSquares()[6][25].isFull());
 
         assertEquals(pisteTulos, odotetutPisteet);
     }
@@ -113,10 +113,10 @@ class PalikkaTest {
      */
     @Test
     public void voikoPaivittaaTesti() {
-        RuutuTehdas rt = new RuutuTehdas();
-        Ruutu I = rt.teeReunaRuutu();
-        Ruutu O = rt.teeTyhjaRuutu();
-        ruudukko.asetaRuudut(new Ruutu[][]{
+        SquareFactory rt = new SquareFactory();
+        Square I = rt.createBorderSquare();
+        Square O = rt.createEmptySquare();
+        grid.setSquares(new Square[][]{
                 {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
                 {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
                 {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
@@ -136,10 +136,10 @@ class PalikkaTest {
                 {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
                 {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I}
         });
-        palikka = new Ipalikka(ruudukko);
-        assertFalse(ruudukko.voikoPaivittaa(new int[]{10,17}, palikka.annaPalikanMuoto()));//kohdassa on jo palikoita
-        assertFalse(ruudukko.voikoPaivittaa(new int[]{14,18}, palikka.annaPalikanMuoto()));//reuna-alueella
-        assertTrue(ruudukko.voikoPaivittaa(new int[]{10,16}, palikka.annaPalikanMuoto()));//kohta on tyhja
+        block = new IBlock(grid);
+        assertFalse(grid.canUpdate(new int[]{10,17}, block.getShape()));//kohdassa on jo palikoita
+        assertFalse(grid.canUpdate(new int[]{14,18}, block.getShape()));//reuna-alueella
+        assertTrue(grid.canUpdate(new int[]{10,16}, block.getShape()));//kohta on tyhja
     }
 
     /**
@@ -147,10 +147,10 @@ class PalikkaTest {
      */
     @Test
     public void haamuPalikkaTesti() {
-        RuutuTehdas rt = new RuutuTehdas();
-        Ruutu I = rt.teeReunaRuutu();
-        Ruutu O = rt.teeTyhjaRuutu();
-        ruudukko.asetaRuudut(new Ruutu[][]{
+        SquareFactory rt = new SquareFactory();
+        Square I = rt.createBorderSquare();
+        Square O = rt.createEmptySquare();
+        grid.setSquares(new Square[][]{
                 {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
                 {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
                 {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
@@ -170,28 +170,28 @@ class PalikkaTest {
                 {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
                 {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I}
         });
-        palikka = new Spalikka(ruudukko);
-        palikka.asetaRuudukolle();//asettaa myos haamupalikan
+        block = new Spalikka(grid);
+        block.putIntoGrid();//asettaa myos haamupalikan
 
-        assertFalse(ruudukko.annaRuudut()[7][18].onkoTaynna());
-        assertFalse(ruudukko.annaRuudut()[7][18].annaPutoaminen());
-        assertSame(ruudukko.annaRuudut()[7][18].annaVari(), Vari.HARMAA);
+        assertFalse(grid.getSquares()[7][18].isFull());
+        assertFalse(grid.getSquares()[7][18].isFalling());
+        assertSame(grid.getSquares()[7][18].getColor(), Color.GRAY);
 
-        assertFalse(ruudukko.annaRuudut()[8][18].onkoTaynna());
-        assertFalse(ruudukko.annaRuudut()[8][18].annaPutoaminen());
-        assertSame(ruudukko.annaRuudut()[8][18].annaVari(), Vari.HARMAA);
+        assertFalse(grid.getSquares()[8][18].isFull());
+        assertFalse(grid.getSquares()[8][18].isFalling());
+        assertSame(grid.getSquares()[8][18].getColor(), Color.GRAY);
 
-        assertFalse(ruudukko.annaRuudut()[8][17].onkoTaynna());
-        assertFalse(ruudukko.annaRuudut()[8][17].annaPutoaminen());
-        assertSame(ruudukko.annaRuudut()[8][17].annaVari(), Vari.HARMAA);
+        assertFalse(grid.getSquares()[8][17].isFull());
+        assertFalse(grid.getSquares()[8][17].isFalling());
+        assertSame(grid.getSquares()[8][17].getColor(), Color.GRAY);
 
-        assertFalse(ruudukko.annaRuudut()[7][17].onkoTaynna());
-        assertFalse(ruudukko.annaRuudut()[7][17].annaPutoaminen());
-        assertSame(ruudukko.annaRuudut()[7][17].annaVari(), Vari.MUSTA);
+        assertFalse(grid.getSquares()[7][17].isFull());
+        assertFalse(grid.getSquares()[7][17].isFalling());
+        assertSame(grid.getSquares()[7][17].getColor(), Color.BLACK);
 
-        assertTrue(ruudukko.annaRuudut()[7][19].onkoTaynna());
-        assertFalse(ruudukko.annaRuudut()[7][19].annaPutoaminen());
-        assertNotSame(ruudukko.annaRuudut()[7][19].annaVari(), Vari.HARMAA);
+        assertTrue(grid.getSquares()[7][19].isFull());
+        assertFalse(grid.getSquares()[7][19].isFalling());
+        assertNotSame(grid.getSquares()[7][19].getColor(), Color.GRAY);
     }
 
     /**
@@ -200,10 +200,10 @@ class PalikkaTest {
      */
     @Test
     public void haamuPalikkaLiikeTesti() {
-        RuutuTehdas rt = new RuutuTehdas();
-        Ruutu I = rt.teeReunaRuutu();
-        Ruutu O = rt.teeTyhjaRuutu();
-        ruudukko.asetaRuudut(new Ruutu[][]{
+        SquareFactory rt = new SquareFactory();
+        Square I = rt.createBorderSquare();
+        Square O = rt.createEmptySquare();
+        grid.setSquares(new Square[][]{
                 {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
                 {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
                 {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
@@ -223,31 +223,31 @@ class PalikkaTest {
                 {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
                 {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I}
         });
-        palikka = new Spalikka(ruudukko);
-        palikka.asetaRuudukolle();//asettaa myos haamupalikan
-        palikka.liikuOikealle();
+        block = new Spalikka(grid);
+        block.putIntoGrid();//asettaa myos haamupalikan
+        block.moveRight();
 
         //varmistavat, etta vanhasta kohdasta poistettiin haamupalikan osa
-        assertFalse(ruudukko.annaRuudut()[7][18].onkoTaynna());
-        assertFalse(ruudukko.annaRuudut()[7][18].annaPutoaminen());
-        assertSame(ruudukko.annaRuudut()[7][18].annaVari(), Vari.MUSTA);
+        assertFalse(grid.getSquares()[7][18].isFull());
+        assertFalse(grid.getSquares()[7][18].isFalling());
+        assertSame(grid.getSquares()[7][18].getColor(), Color.BLACK);
 
-        assertFalse(ruudukko.annaRuudut()[8][18].onkoTaynna());
-        assertFalse(ruudukko.annaRuudut()[8][18].annaPutoaminen());
-        assertSame(ruudukko.annaRuudut()[8][18].annaVari(), Vari.MUSTA);
+        assertFalse(grid.getSquares()[8][18].isFull());
+        assertFalse(grid.getSquares()[8][18].isFalling());
+        assertSame(grid.getSquares()[8][18].getColor(), Color.BLACK);
 
-        assertFalse(ruudukko.annaRuudut()[8][17].onkoTaynna());
-        assertFalse(ruudukko.annaRuudut()[8][17].annaPutoaminen());
-        assertSame(ruudukko.annaRuudut()[8][17].annaVari(), Vari.MUSTA);
+        assertFalse(grid.getSquares()[8][17].isFull());
+        assertFalse(grid.getSquares()[8][17].isFalling());
+        assertSame(grid.getSquares()[8][17].getColor(), Color.BLACK);
 
         //varmistaa etta uuteen kohtaan tulee haamupalikka
-        assertFalse(ruudukko.annaRuudut()[8][18].onkoTaynna());
-        assertFalse(ruudukko.annaRuudut()[8][18].annaPutoaminen());
-        assertSame(ruudukko.annaRuudut()[8][19].annaVari(), Vari.HARMAA);
+        assertFalse(grid.getSquares()[8][18].isFull());
+        assertFalse(grid.getSquares()[8][18].isFalling());
+        assertSame(grid.getSquares()[8][19].getColor(), Color.GRAY);
 
-        assertFalse(ruudukko.annaRuudut()[9][18].onkoTaynna());
-        assertFalse(ruudukko.annaRuudut()[9][18].annaPutoaminen());
-        assertSame(ruudukko.annaRuudut()[9][19].annaVari(), Vari.HARMAA);
+        assertFalse(grid.getSquares()[9][18].isFull());
+        assertFalse(grid.getSquares()[9][18].isFalling());
+        assertSame(grid.getSquares()[9][19].getColor(), Color.GRAY);
     }
 
     /**
@@ -255,19 +255,19 @@ class PalikkaTest {
      */
     @Test
     public void kaannyVastapaivaanTesti() {
-        palikka = new Tpalikka(ruudukko);
-        palikka.asetaSijainti(new int[]{7, 2});
+        block = new TBlock(grid);
+        block.setLocation(new int[]{7, 2});
 
-        palikka.asetaRuudukolle();
+        block.putIntoGrid();
 
-        palikka.kaannaVastapaivaanRuudukossa();
+        block.turnCounterClockwiseInGrid();
 
-        assertTrue(ruudukko.annaRuudut()[7][3].onkoTaynna());
-        assertTrue(ruudukko.annaRuudut()[8][4].onkoTaynna());
+        assertTrue(grid.getSquares()[7][3].isFull());
+        assertTrue(grid.getSquares()[8][4].isFull());
 
-        assertFalse(ruudukko.annaRuudut()[7][4].onkoTaynna());
-        assertFalse(ruudukko.annaRuudut()[6][2].onkoTaynna());
-        assertFalse(ruudukko.annaRuudut()[7][1].onkoTaynna());
+        assertFalse(grid.getSquares()[7][4].isFull());
+        assertFalse(grid.getSquares()[6][2].isFull());
+        assertFalse(grid.getSquares()[7][1].isFull());
     }
 
     /**
@@ -275,19 +275,19 @@ class PalikkaTest {
      */
     @Test
     public void kaannyMyotapaivaanTesti() {
-        palikka = new Tpalikka(ruudukko);
-        palikka.asetaSijainti(new int[]{7, 2});
+        block = new TBlock(grid);
+        block.setLocation(new int[]{7, 2});
 
-        palikka.asetaRuudukolle();
+        block.putIntoGrid();
 
-        palikka.kaannaMyotapaivaanRuudukossa();
+        block.turnClockwiseInGrid();
 
-        assertTrue(ruudukko.annaRuudut()[9][3].onkoTaynna());
-        assertTrue(ruudukko.annaRuudut()[8][4].onkoTaynna());
+        assertTrue(grid.getSquares()[9][3].isFull());
+        assertTrue(grid.getSquares()[8][4].isFull());
 
-        assertFalse(ruudukko.annaRuudut()[9][4].onkoTaynna());
-        assertFalse(ruudukko.annaRuudut()[10][2].onkoTaynna());
-        assertFalse(ruudukko.annaRuudut()[9][1].onkoTaynna());
+        assertFalse(grid.getSquares()[9][4].isFull());
+        assertFalse(grid.getSquares()[10][2].isFull());
+        assertFalse(grid.getSquares()[9][1].isFull());
     }
 
     /**
@@ -295,32 +295,32 @@ class PalikkaTest {
      */
     @Test
     public void pudotaYksiRuutuTesti() {
-        palikka = new Opalikka(ruudukko);
-        palikka.pudotaYksiRuutu();
+        block = new OBlock(grid);
+        block.dropByOneSquare();
 
         //vanha palikan kohta
-        assertFalse(ruudukko.annaRuudut()[8][0].onkoTaynna());
-        assertFalse(ruudukko.annaRuudut()[8][0].annaPutoaminen());
-        assertSame(ruudukko.annaRuudut()[8][0].annaVari(), Vari.MUSTA);
+        assertFalse(grid.getSquares()[8][0].isFull());
+        assertFalse(grid.getSquares()[8][0].isFalling());
+        assertSame(grid.getSquares()[8][0].getColor(), Color.BLACK);
 
         //vanha palikan kohta
-        assertFalse(ruudukko.annaRuudut()[9][0].onkoTaynna());
-        assertFalse(ruudukko.annaRuudut()[9][0].annaPutoaminen());
-        assertSame(ruudukko.annaRuudut()[9][0].annaVari(), Vari.MUSTA);
+        assertFalse(grid.getSquares()[9][0].isFull());
+        assertFalse(grid.getSquares()[9][0].isFalling());
+        assertSame(grid.getSquares()[9][0].getColor(), Color.BLACK);
 
         //palikan uuden kohdan alla
-        assertFalse(ruudukko.annaRuudut()[8][3].onkoTaynna());
-        assertFalse(ruudukko.annaRuudut()[8][3].annaPutoaminen());
-        assertSame(ruudukko.annaRuudut()[8][3].annaVari(), Vari.MUSTA);
+        assertFalse(grid.getSquares()[8][3].isFull());
+        assertFalse(grid.getSquares()[8][3].isFalling());
+        assertSame(grid.getSquares()[8][3].getColor(), Color.BLACK);
 
         //palikan pitaisi viela olla tassa kohdassa
-        assertTrue(ruudukko.annaRuudut()[8][1].onkoTaynna());
-        assertTrue(ruudukko.annaRuudut()[8][1].annaPutoaminen());
-        assertNotSame(ruudukko.annaRuudut()[8][1].annaVari(), Vari.MUSTA);
+        assertTrue(grid.getSquares()[8][1].isFull());
+        assertTrue(grid.getSquares()[8][1].isFalling());
+        assertNotSame(grid.getSquares()[8][1].getColor(), Color.BLACK);
 
         //palikan pitaisi nyt olla tassa kohdassa
-        assertTrue(ruudukko.annaRuudut()[9][2].onkoTaynna());
-        assertTrue(ruudukko.annaRuudut()[9][2].annaPutoaminen());
-        assertNotSame(ruudukko.annaRuudut()[9][2].annaVari(), Vari.MUSTA);
+        assertTrue(grid.getSquares()[9][2].isFull());
+        assertTrue(grid.getSquares()[9][2].isFalling());
+        assertNotSame(grid.getSquares()[9][2].getColor(), Color.BLACK);
     }
 }

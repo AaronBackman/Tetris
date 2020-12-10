@@ -99,7 +99,7 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>gamelogic.Ruutu</li>
+<li>gamelogic.Square</li>
 </ul>
 </li>
 </ul>
@@ -111,7 +111,7 @@ var activeTableTab = "activeTableTab";
 <pre>public class <span class="typeNameLabel">Ruutu</span>
 extends java.lang.Object</pre>
 <div class="block">sisaltaa tietoa yksittaiseen ruutuun liittyvista ominaisuuksista:
- onko putoamassa, onko taynna ja vari</div>
+ onko putoamassa, onko taynna ja color</div>
 </li>
 </ul>
 </div>
@@ -140,7 +140,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>private <a href="../gamelogic/Vari.html" title="enum in gamelogic">Vari</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Ruutu.html#vari">vari</a></span></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Ruutu.html#color">color</a></span></code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -198,11 +198,11 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Ruutu.html#asetaVari-gamelogic.Vari-">asetaVari</a></span>(<a href="../gamelogic/Vari.html" title="enum in gamelogic">Vari</a>&nbsp;vari)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Ruutu.html#asetaVari-gamelogic.Color-">asetaVari</a></span>(<a href="../gamelogic/Vari.html" title="enum in gamelogic">Vari</a>&nbsp;color)</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Ruutu.html#equals-gamelogic.Ruutu-">equals</a></span>(<a href="../gamelogic/Ruutu.html" title="class in gamelogic">Ruutu</a>&nbsp;toinenRuutu)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Ruutu.html#equals-gamelogic.Square-">equals</a></span>(<a href="../gamelogic/Ruutu.html" title="class in gamelogic">Ruutu</a>&nbsp;toinenSquare)</code>
 <div class="block">vertailee ovatko kaksi ruutua samanlaiset</div>
 </td>
 </tr>
@@ -250,13 +250,13 @@ extends java.lang.Object</pre>
 <pre>private&nbsp;boolean onkoTaynna</pre>
 </li>
 </ul>
-<a name="vari">
+<a name="color">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>vari</h4>
-<pre>private&nbsp;<a href="../gamelogic/Vari.html" title="enum in gamelogic">Vari</a> vari</pre>
+<h4>color</h4>
+<pre>private&nbsp;<a href="../gamelogic/Vari.html" title="enum in gamelogic">Vari</a> color</pre>
 </li>
 </ul>
 </li>
@@ -294,7 +294,7 @@ extends java.lang.Object</pre>
 <div class="block">muuntaa ruudun varin enum muodosta stringiksi, jonka javafx tunnistaa</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>vari String muodossa</dd>
+<dd>color String muodossa</dd>
 </dl>
 </li>
 </ul>
@@ -304,11 +304,11 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>equals</h4>
-<pre>public&nbsp;boolean&nbsp;equals(<a href="../gamelogic/Ruutu.html" title="class in gamelogic">Ruutu</a>&nbsp;toinenRuutu)</pre>
+<pre>public&nbsp;boolean&nbsp;equals(<a href="../gamelogic/Ruutu.html" title="class in gamelogic">Ruutu</a>&nbsp;toinenSquare)</pre>
 <div class="block">vertailee ovatko kaksi ruutua samanlaiset</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>toinenRuutu</code> - ruutu johon verrataan</dd>
+<dd><code>toinenSquare</code> - square johon verrataan</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true jos samanlaiset, muuten false</dd>
 </dl>
@@ -323,7 +323,7 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;boolean&nbsp;annaPutoaminen()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>true jos ruutu on putoamassa</dd>
+<dd>true jos square on putoamassa</dd>
 </dl>
 </li>
 </ul>
@@ -349,7 +349,7 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;boolean&nbsp;onkoTaynna()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>true jos ruutu on taynna</dd>
+<dd>true jos square on taynna</dd>
 </dl>
 </li>
 </ul>
@@ -385,10 +385,10 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>asetaVari</h4>
-<pre>public&nbsp;void&nbsp;asetaVari(<a href="../gamelogic/Vari.html" title="enum in gamelogic">Vari</a>&nbsp;vari)</pre>
+<pre>public&nbsp;void&nbsp;asetaVari(<a href="../gamelogic/Vari.html" title="enum in gamelogic">Vari</a>&nbsp;color)</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>vari</code> - asetettava enum arvo</dd>
+<dd><code>color</code> - asetettava enum arvo</dd>
 </dl>
 </li>
 </ul>

@@ -99,7 +99,7 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>gamelogic.Ruudukko</li>
+<li>gamelogic.Grid</li>
 </ul>
 </li>
 </ul>
@@ -156,7 +156,7 @@ extends java.lang.Object</pre>
 <td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Ruudukko.html#SIJOITUS_ALUE">SIJOITUS_ALUE</a></span></code>
 <div class="block">ruudukon ylaosassa olevan kayttajalle nakymattoman alueen syvyys
  alueelle sijoitetaan uudet palikat
- peli on havitty jos palikka putoaa tanne alueelle (ruudukon ulkopuolella)</div>
+ game on havitty jos block putoaa tanne alueelle (ruudukon ulkopuolella)</div>
 </td>
 </tr>
 </table>
@@ -200,39 +200,39 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Ruudukko.html#asetaHaamuPalikka-int:A-gamelogic.Ruutu:A:A-">asetaHaamuPalikka</a></span>(int[]&nbsp;putoamisSijainti,
+<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Ruudukko.html#asetaHaamuPalikka-int:A-gamelogic.Square:A:A-">asetaHaamuPalikka</a></span>(int[]&nbsp;putoamisSijainti,
                  <a href="../gamelogic/Ruutu.html" title="class in gamelogic">Ruutu</a>[][]&nbsp;palikanMuoto)</code>
 <div class="block">asettaa ruudukolle ns.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Ruudukko.html#asetaPalikkaPudonneeksi-int:A-gamelogic.Ruutu:A:A-">asetaPalikkaPudonneeksi</a></span>(int[]&nbsp;sijainti,
+<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Ruudukko.html#asetaPalikkaPudonneeksi-int:A-gamelogic.Square:A:A-">asetaPalikkaPudonneeksi</a></span>(int[]&nbsp;sijainti,
                        <a href="../gamelogic/Ruutu.html" title="class in gamelogic">Ruutu</a>[][]&nbsp;palikanMuoto)</code>
 <div class="block">asettaa annetulta alueelta olevilta palikoilta putoamisominaisuuden pois</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Ruudukko.html#asetaRuudut-gamelogic.Ruutu:A:A-">asetaRuudut</a></span>(<a href="../gamelogic/Ruutu.html" title="class in gamelogic">Ruutu</a>[][]&nbsp;ruudut)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Ruudukko.html#asetaRuudut-gamelogic.Square:A:A-">asetaRuudut</a></span>(<a href="../gamelogic/Ruutu.html" title="class in gamelogic">Ruutu</a>[][]&nbsp;ruudut)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Ruudukko.html#onkoPalikkaRuudukonUlkopuolella-int:A-gamelogic.Ruutu:A:A-">onkoPalikkaRuudukonUlkopuolella</a></span>(int[]&nbsp;sijainti,
+<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Ruudukko.html#onkoPalikkaRuudukonUlkopuolella-int:A-gamelogic.Square:A:A-">onkoPalikkaRuudukonUlkopuolella</a></span>(int[]&nbsp;sijainti,
                                <a href="../gamelogic/Ruutu.html" title="class in gamelogic">Ruutu</a>[][]&nbsp;palikanMuoto)</code>
 <div class="block">tarkistaa onko taynna olevia osia palikasta ruudukon ulkopuolella (sijoitusalueella)</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Ruudukko.html#paivitaRuudukko-int:A-gamelogic.Ruutu:A:A-">paivitaRuudukko</a></span>(int[]&nbsp;sijainti,
+<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Ruudukko.html#paivitaRuudukko-int:A-gamelogic.Square:A:A-">paivitaRuudukko</a></span>(int[]&nbsp;sijainti,
                <a href="../gamelogic/Ruutu.html" title="class in gamelogic">Ruutu</a>[][]&nbsp;palikanMuoto)</code>
 <div class="block">sijoittaa palikan sijaintia ja muotoa vastaavasti ruudukolle</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Ruudukko.html#poistaHaamuPalikka-int:A-gamelogic.Ruutu:A:A-">poistaHaamuPalikka</a></span>(int[]&nbsp;putoamisSijainti,
+<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Ruudukko.html#poistaHaamuPalikka-int:A-gamelogic.Square:A:A-">poistaHaamuPalikka</a></span>(int[]&nbsp;putoamisSijainti,
                   <a href="../gamelogic/Ruutu.html" title="class in gamelogic">Ruutu</a>[][]&nbsp;palikanMuoto)</code>
 <div class="block">poistaa ruudukolta (vanhan) haamupalikan</div>
 </td>
@@ -256,10 +256,10 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Ruudukko.html#voikoPaivittaa-int:A-gamelogic.Ruutu:A:A-">voikoPaivittaa</a></span>(int[]&nbsp;sijainti,
+<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Ruudukko.html#voikoPaivittaa-int:A-gamelogic.Square:A:A-">voikoPaivittaa</a></span>(int[]&nbsp;sijainti,
               <a href="../gamelogic/Ruutu.html" title="class in gamelogic">Ruutu</a>[][]&nbsp;palikanMuoto)</code>
-<div class="block">tarkistaa onko sijaintia ja palikan muotoa vastaavalla alueella seka taynna oleva ruudukon ja palikan ruutu
- jos ei ole palikka voidaan asettaa ruudukolle</div>
+<div class="block">tarkistaa onko sijaintia ja palikan muotoa vastaavalla alueella seka taynna oleva ruudukon ja palikan square
+ jos ei ole block voidaan asettaa ruudukolle</div>
 </td>
 </tr>
 </table>
@@ -304,7 +304,7 @@ extends java.lang.Object</pre>
  mahdollistaa ettei tarvitse tarkistaa onko IndexOutOfBounds, kun palikkaa liikutellaan</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../constant-values.html#gamelogic.Ruudukko.REUNA_ALUE">Constant Field Values</a></dd>
+<dd><a href="../constant-values.html#gamelogic.Grid.REUNA_ALUE">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
@@ -317,10 +317,10 @@ extends java.lang.Object</pre>
 <pre>public static final&nbsp;int SIJOITUS_ALUE</pre>
 <div class="block">ruudukon ylaosassa olevan kayttajalle nakymattoman alueen syvyys
  alueelle sijoitetaan uudet palikat
- peli on havitty jos palikka putoaa tanne alueelle (ruudukon ulkopuolella)</div>
+ game on havitty jos block putoaa tanne alueelle (ruudukon ulkopuolella)</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../constant-values.html#gamelogic.Ruudukko.SIJOITUS_ALUE">Constant Field Values</a></dd>
+<dd><a href="../constant-values.html#gamelogic.Grid.SIJOITUS_ALUE">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
@@ -334,7 +334,7 @@ extends java.lang.Object</pre>
 <div class="block">pelaajalle nakyvan alueen korkeus</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../constant-values.html#gamelogic.Ruudukko.KORKEUS">Constant Field Values</a></dd>
+<dd><a href="../constant-values.html#gamelogic.Grid.KORKEUS">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
@@ -348,7 +348,7 @@ extends java.lang.Object</pre>
 <div class="block">pelaajalle nakyvan alueen leveys</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../constant-values.html#gamelogic.Ruudukko.LEVEYS">Constant Field Values</a></dd>
+<dd><a href="../constant-values.html#gamelogic.Grid.LEVEYS">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
@@ -390,10 +390,10 @@ extends java.lang.Object</pre>
 <div class="block">sijoittaa palikan sijaintia ja muotoa vastaavasti ruudukolle</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>sijainti</code> - paikka johon palikka laitetaan</dd>
+<dd><code>sijainti</code> - paikka johon block laitetaan</dd>
 <dd><code>palikanMuoto</code> - sisaltaa tiedon palikan muodosta</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.IndexOutOfBoundsException</code> - jos palikka sijaitsee reuna alueella tai koko ruudukon ulkopuolella</dd>
+<dd><code>java.lang.IndexOutOfBoundsException</code> - jos block sijaitsee reuna alueella tai koko ruudukon ulkopuolella</dd>
 </dl>
 </li>
 </ul>
@@ -405,8 +405,8 @@ extends java.lang.Object</pre>
 <h4>voikoPaivittaa</h4>
 <pre>public&nbsp;boolean&nbsp;voikoPaivittaa(int[]&nbsp;sijainti,
                               <a href="../gamelogic/Ruutu.html" title="class in gamelogic">Ruutu</a>[][]&nbsp;palikanMuoto)</pre>
-<div class="block">tarkistaa onko sijaintia ja palikan muotoa vastaavalla alueella seka taynna oleva ruudukon ja palikan ruutu
- jos ei ole palikka voidaan asettaa ruudukolle</div>
+<div class="block">tarkistaa onko sijaintia ja palikan muotoa vastaavalla alueella seka taynna oleva ruudukon ja palikan square
+ jos ei ole block voidaan asettaa ruudukolle</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>sijainti</code> - asetettvan palikan sijainti, vaaka ja pysty koordinaatti vasemmasta ylakulmasta</dd>
@@ -491,7 +491,7 @@ extends java.lang.Object</pre>
 <dd><code>sijainti</code> - palikan vasemman ylakulman sijainti ruudukolla, vaaka ja pystykoordinaatti</dd>
 <dd><code>palikanMuoto</code> - sisaltaa tiedon palikan muodosta</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>true jos palikka on ruudukon ulkopuolella, muuten false</dd>
+<dd>true jos block on ruudukon ulkopuolella, muuten false</dd>
 </dl>
 </li>
 </ul>
@@ -503,10 +503,10 @@ extends java.lang.Object</pre>
 <h4>asetaHaamuPalikka</h4>
 <pre>public&nbsp;void&nbsp;asetaHaamuPalikka(int[]&nbsp;putoamisSijainti,
                               <a href="../gamelogic/Ruutu.html" title="class in gamelogic">Ruutu</a>[][]&nbsp;palikanMuoto)</pre>
-<div class="block">asettaa ruudukolle ns. haamupalikan joka nayttaa mihin palikka tulisi nyt putoamaan</div>
+<div class="block">asettaa ruudukolle ns. haamupalikan joka nayttaa mihin block tulisi nyt putoamaan</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>putoamisSijainti</code> - kohta ruudukolla johon palikka tulisi putoamaan, vaaka ja pystykoordinaatti
+<dd><code>putoamisSijainti</code> - kohta ruudukolla johon block tulisi putoamaan, vaaka ja pystykoordinaatti
  vasemmasta ylakulmasta</dd>
 <dd><code>palikanMuoto</code> - sisaltaa tiedon haamupalikan muodosta</dd>
 </dl>

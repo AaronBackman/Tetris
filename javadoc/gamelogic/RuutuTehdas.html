@@ -99,7 +99,7 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>gamelogic.RuutuTehdas</li>
+<li>gamelogic.SquareFactory</li>
 </ul>
 </li>
 </ul>
@@ -152,7 +152,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../gamelogic/Ruutu.html" title="class in gamelogic">Ruutu</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/RuutuTehdas.html#teePutoavaRuutu-gamelogic.Vari-">teePutoavaRuutu</a></span>(<a href="../gamelogic/Vari.html" title="enum in gamelogic">Vari</a>&nbsp;vari)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/RuutuTehdas.html#teePutoavaRuutu-gamelogic.Color-">teePutoavaRuutu</a></span>(<a href="../gamelogic/Vari.html" title="enum in gamelogic">Vari</a>&nbsp;color)</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../gamelogic/Ruutu.html" title="class in gamelogic">Ruutu</a></code></td>
@@ -207,12 +207,12 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>teePutoavaRuutu</h4>
-<pre>public&nbsp;<a href="../gamelogic/Ruutu.html" title="class in gamelogic">Ruutu</a>&nbsp;teePutoavaRuutu(<a href="../gamelogic/Vari.html" title="enum in gamelogic">Vari</a>&nbsp;vari)</pre>
+<pre>public&nbsp;<a href="../gamelogic/Ruutu.html" title="class in gamelogic">Ruutu</a>&nbsp;teePutoavaRuutu(<a href="../gamelogic/Vari.html" title="enum in gamelogic">Vari</a>&nbsp;color)</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>vari</code> - ruudun vari</dd>
+<dd><code>color</code> - ruudun color</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>putoava ruutu, joka on taynna ja jolla on vari</dd>
+<dd>putoava square, joka on taynna ja jolla on color</dd>
 </dl>
 </li>
 </ul>
@@ -225,7 +225,7 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;<a href="../gamelogic/Ruutu.html" title="class in gamelogic">Ruutu</a>&nbsp;teeTyhjaRuutu()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>tyhja ruutu, joka on tyhja ja musta eika putoa</dd>
+<dd>tyhja square, joka on tyhja ja musta eika putoa</dd>
 </dl>
 </li>
 </ul>
@@ -238,7 +238,7 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;<a href="../gamelogic/Ruutu.html" title="class in gamelogic">Ruutu</a>&nbsp;teeReunaRuutu()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>musta taynna oleva ruutu, tarkoitus toimia ruudukon reunoina</dd>
+<dd>musta taynna oleva square, tarkoitus toimia ruudukon reunoina</dd>
 </dl>
 </li>
 </ul>
@@ -251,8 +251,8 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;<a href="../gamelogic/Ruutu.html" title="class in gamelogic">Ruutu</a>&nbsp;teePutoamisKohtaRuutu()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>haamupalikan ruutu, ei taynna eika putoamassa
- ainoa eroava ominaisuustyhjasta ruudusta on vari</dd>
+<dd>haamupalikan square, ei taynna eika putoamassa
+ ainoa eroava ominaisuustyhjasta ruudusta on color</dd>
 </dl>
 </li>
 </ul>

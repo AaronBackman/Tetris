@@ -99,7 +99,7 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>gamelogic.Peli</li>
+<li>gamelogic.Game</li>
 </ul>
 </li>
 </ul>
@@ -146,7 +146,7 @@ extends java.lang.Object</pre>
 <tr class="rowColor">
 <td class="colFirst"><code>private <a href="../gamelogic/Palikka.html" title="class in gamelogic">Palikka</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Peli.html#putoavaPalikka">putoavaPalikka</a></span></code>
-<div class="block">nykyinen putoamassa oleva palikka (vain yksi kerrallaan)</div>
+<div class="block">nykyinen putoamassa oleva block (vain yksi kerrallaan)</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -220,8 +220,8 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../gamelogic/Peli.html#seuraavaFrame--">seuraavaFrame</a></span>()</code>
 <div class="block">mallintaa yhden askeleen palikan pelaajasta riippumattomassa putoamisessa alaspain
- hoitaa siihen liittyvat tarkistukse: kuten onko peli havitty tai onko palikka pudonnut
- ja tarvitaan uusi putoava palikka</div>
+ hoitaa siihen liittyvat tarkistukse: kuten onko game havitty tai onko block pudonnut
+ ja tarvitaan uusi putoava block</div>
 </td>
 </tr>
 </table>
@@ -273,7 +273,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>putoavaPalikka</h4>
 <pre>private&nbsp;<a href="../gamelogic/Palikka.html" title="class in gamelogic">Palikka</a> putoavaPalikka</pre>
-<div class="block">nykyinen putoamassa oleva palikka (vain yksi kerrallaan)</div>
+<div class="block">nykyinen putoamassa oleva block (vain yksi kerrallaan)</div>
 </li>
 </ul>
 <a name="peliKaynnissa">
@@ -343,8 +343,8 @@ extends java.lang.Object</pre>
 <h4>seuraavaFrame</h4>
 <pre>public&nbsp;void&nbsp;seuraavaFrame()</pre>
 <div class="block">mallintaa yhden askeleen palikan pelaajasta riippumattomassa putoamisessa alaspain
- hoitaa siihen liittyvat tarkistukse: kuten onko peli havitty tai onko palikka pudonnut
- ja tarvitaan uusi putoava palikka</div>
+ hoitaa siihen liittyvat tarkistukse: kuten onko game havitty tai onko block pudonnut
+ ja tarvitaan uusi putoava block</div>
 </li>
 </ul>
 <a name="annaRuudukko--">
@@ -356,7 +356,7 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;<a href="../gamelogic/Ruudukko.html" title="class in gamelogic">Ruudukko</a>&nbsp;annaRuudukko()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>ruudukko joka sisaltaa tiedon pelin ruuduista</dd>
+<dd>grid joka sisaltaa tiedon pelin ruuduista</dd>
 </dl>
 </li>
 </ul>
@@ -369,7 +369,7 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;boolean&nbsp;onkoPeliKaynnissa()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>true jos peli on kaynnissa</dd>
+<dd>true jos game on kaynnissa</dd>
 </dl>
 </li>
 </ul>
@@ -408,7 +408,7 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;<a href="../gamelogic/Palikka.html" title="class in gamelogic">Palikka</a>&nbsp;annaPutoavaPalikka()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>nykyinen putoava palikka</dd>
+<dd>nykyinen putoava block</dd>
 </dl>
 </li>
 </ul>
