@@ -1,13 +1,7 @@
-# Tetris
-Turun yliopiston soveltava projekti 2020 kurssin harjoitustyö
-## Tavoite
-Projektin tavoite on kehittää helppokäyttöinen ja käyttäjäystävällinen implementaatio Tetris-pelistä.
-## Toteutus
-Projekti ohjelmoitiin kokonaan Java ohjelmointikielellä (Java 8). Grafiikat toteutettiin JavaFx:llä. Projekti rakennettiin maven projektina.
-## Asentaminen
-#### Windows 10
-Valitse Tetris.jar tiedosto ja lataa se. Tarvitset ohjelman ajamiseen Java 8:n. Etsi .jar tiedosto ja tuplaklikkaa sitä.
-#### Kehitysympäristössä
-Lataa Java 8. Kloonaa projekti ja siirrä se haluamaasi kehitysympäristöön (esim. Intelli IDEA tai Eclipse).
-## Dokumentaatio
-Javadoc dokumentaatio löytyy html muodossa javadoc kansiosta, lataa koko kansio ja avaa jokin html tiedostoista.
+##Tetris
+###Goals
+The goals of the project are to develop an easy to use and user-friendly implementation of the Tetris-game.
+###Implementation
+Programmed completely with Java 11, buil with maven (3.6.3). Graphics were made using JavaFx.
+###Running:
+run "mvn clean javafx:run" in project root
