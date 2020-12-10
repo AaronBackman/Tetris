@@ -5,15 +5,15 @@ import org.junit.jupiter.api.Test;
 import java.util.Random;
 
 /**
- * testaa Peli luokkaa satunnaisilla syotteilla
+ * Tests that game class wont break with random (and fast) user input
  */
 class GameTest {
 
     /**
-     * testaa ettei kayttaja pysty aiheuttamaan Exceptionia kelvollisilla syotteilla
+     * tests that user cant break the program with allowed input
      */
     @Test
-    public void testaaSatunnaisiaSyotteita() {
+    public void testRandomInput() {
         Game game = new Game();
 
         Random r = new Random();
@@ -23,31 +23,31 @@ class GameTest {
                 game = new Game();
             }
 
-            //ei nolla jotta voi tehda siirtoja heti ennen ensimmaista putoamista
+            //not 0 so that moves can be made before the block falls first
             if(n % 50 == 10) {
                 game.nextFrame();
             }
 
-            int syote = r.nextInt(6);
+            int input = r.nextInt(6);
 
-            switch(syote) {
+            switch(input) {
                 case 0:
-                    game.takeInput("vasen");
+                    game.takeInput("left");
                     break;
                 case 1:
-                    game.takeInput("oikea");
+                    game.takeInput("right");
                     break;
                 case 2:
-                    game.takeInput("alas");
+                    game.takeInput("bottom");
                     break;
                 case 3:
-                    game.takeInput("vastaPaivaan");
+                    game.takeInput("counterClockwise");
                     break;
                 case 4:
-                    game.takeInput("myotaPaivaan");
+                    game.takeInput("clockwise");
                     break;
                 case 5:
-                    game.takeInput("pudotaAlasAsti");
+                    game.takeInput("dropToBottom");
                     break;
             }
             n++;

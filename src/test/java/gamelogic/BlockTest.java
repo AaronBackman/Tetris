@@ -6,14 +6,14 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * testaa palikan siirtamista ruudukolla yksikkotesteilla
+ * test moving the block with unit tests
  */
 class BlockTest {
     Grid grid;
     Block block;
 
     /**
-     * kaytannossa konstruktori
+     * basically the constructor
      */
     @BeforeEach
     public void init() {
@@ -24,43 +24,40 @@ class BlockTest {
     }
 
     /**
-     * tarkistaa vain tapauksen jossa paivityksen pitaisi onnistua, toinen metodi tarkistaa onko se mahdollista
+     * checks the cases where updating is possible
      */
     @Test
-    public void paivitaRuudukkoTesti() {
-        Square[][] kaantoAlue = block.getShape();
+    public void updateGridTest() {
+        Square[][] turningArea = block.getShape();
 
-        int[] sijainti = new int[]{10,10};
-        grid.updateGrid(sijainti, kaantoAlue);
-        for(int i=0; i<kaantoAlue.length; i++) {
-            for(int j=0; j<kaantoAlue.length; j++) {
-                //tarkistaa ovatko palikan ruudut ja paivitettava kohta molemmat taynna
-                assertEquals(kaantoAlue[j][i], grid.getSquares()[j+sijainti[0]][i+sijainti[1]]);
+        int[] location = new int[]{10,10};
+        grid.updateGrid(location, turningArea);
+        for(int i=0; i<turningArea.length; i++) {
+            for(int j=0; j<turningArea.length; j++) {
+                assertEquals(turningArea[j][i], grid.getSquares()[j+location[0]][i+location[1]]);
             }
         }
 
-        sijainti = new int[]{7,3};
-        grid.getSquares()[kaantoAlue.length + sijainti[0]][kaantoAlue.length + sijainti[1]].setFull(true);
-        grid.updateGrid(sijainti, kaantoAlue);
-        for(int i=0; i<kaantoAlue.length; i++) {
-            for(int j=0; j<kaantoAlue.length; j++) {
-                //tarkistaa ovatko palikan ruudut ja paivitettava kohta molemmat taynna
-                if(kaantoAlue[j][i].isFull()) {
-                    assertEquals(kaantoAlue[j][i], grid.getSquares()[j+sijainti[0]][i+sijainti[1]]);
+        location = new int[]{7,3};
+        grid.getSquares()[turningArea.length + location[0]][turningArea.length + location[1]].setFull(true);
+        grid.updateGrid(location, turningArea);
+        for(int i=0; i<turningArea.length; i++) {
+            for(int j=0; j<turningArea.length; j++) {
+                if(turningArea[j][i].isFull()) {
+                    assertEquals(turningArea[j][i], grid.getSquares()[j+location[0]][i+location[1]]);
                 }
             }
         }
     }
 
     /**
-     * testaa toimiiko taysien ruutujen poistaminen ja pisteidenlasku
+     * checks if emptying full rows and calculating score works
      */
     @Test
-    public void poistaTaydetRuudutTesti() {
+    public void removeFullRowsTest() {
         SquareFactory rt = new SquareFactory();
         Square I = rt.createBorderSquare();
         Square O = rt.createEmptySquare();
-        //uusi ruudukko, jossa on 2 taytta rivia, tarkoituksena poistaa taydet rivit ja laskea pisteet
         grid.setSquares(new Square[][]{
                 {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
                 {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I},
@@ -82,8 +79,8 @@ class BlockTest {
                 {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I}
         });
 
-        int pisteTulos = grid.removeFullSquares();
-        int odotetutPisteet = 100; //kaksi poistettua rivia -> 100 pistetta
+        int score = grid.removeFullSquares();
+        int expectedScore = 100; //2 removed rows -> 100 score
 
         assertFalse(grid.getSquares()[6][20].isFull());
         assertFalse(grid.getSquares()[6][21].isFull());
@@ -97,7 +94,7 @@ class BlockTest {
         assertTrue(grid.getSquares()[11][20].isFull());
         assertTrue(grid.getSquares()[12][20].isFull());
 
-        //reunaruutuja ei saa poistaa
+        //border squares must not be removed
         assertTrue(grid.getSquares()[2][20].isFull());
         assertTrue(grid.getSquares()[2][21].isFull());
         assertTrue(grid.getSquares()[6][22].isFull());
@@ -105,14 +102,14 @@ class BlockTest {
         assertTrue(grid.getSquares()[6][24].isFull());
         assertTrue(grid.getSquares()[6][25].isFull());
 
-        assertEquals(pisteTulos, odotetutPisteet);
+        assertEquals(score, expectedScore);
     }
 
     /**
-     * testaa toimiiko ruudukon paivittaminen
+     * test if checking updatability works
      */
     @Test
-    public void voikoPaivittaaTesti() {
+    public void canUpdateTest() {
         SquareFactory rt = new SquareFactory();
         Square I = rt.createBorderSquare();
         Square O = rt.createEmptySquare();
@@ -137,13 +134,13 @@ class BlockTest {
                 {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I}
         });
         block = new IBlock(grid);
-        assertFalse(grid.canUpdate(new int[]{10,17}, block.getShape()));//kohdassa on jo palikoita
-        assertFalse(grid.canUpdate(new int[]{14,18}, block.getShape()));//reuna-alueella
-        assertTrue(grid.canUpdate(new int[]{10,16}, block.getShape()));//kohta on tyhja
+        assertFalse(grid.canUpdate(new int[]{10,17}, block.getShape()));//place already has blocks
+        assertFalse(grid.canUpdate(new int[]{14,18}, block.getShape()));//on border area
+        assertTrue(grid.canUpdate(new int[]{10,16}, block.getShape()));//place is empty
     }
 
     /**
-     * testaa toimiiko haamupalikan asettaminen ruudukolle
+     * tests putting the ghost block to the grid
      */
     @Test
     public void haamuPalikkaTesti() {
@@ -171,7 +168,7 @@ class BlockTest {
                 {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I}
         });
         block = new Spalikka(grid);
-        block.putIntoGrid();//asettaa myos haamupalikan
+        block.putIntoGrid();//also sets the ghost block
 
         assertFalse(grid.getSquares()[7][18].isFull());
         assertFalse(grid.getSquares()[7][18].isFalling());
@@ -195,11 +192,10 @@ class BlockTest {
     }
 
     /**
-     * testaa toimiiko haamupalikan liikuttaminen ruudukolla
-     * putoavan palikan liikkeen mukaisesti
+     * tests if ghost block moves as the falling block moves
      */
     @Test
-    public void haamuPalikkaLiikeTesti() {
+    public void ghostBlockMoveTest() {
         SquareFactory rt = new SquareFactory();
         Square I = rt.createBorderSquare();
         Square O = rt.createEmptySquare();
@@ -224,10 +220,10 @@ class BlockTest {
                 {I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I,I}
         });
         block = new Spalikka(grid);
-        block.putIntoGrid();//asettaa myos haamupalikan
+        block.putIntoGrid();//also sets the ghost block
         block.moveRight();
 
-        //varmistavat, etta vanhasta kohdasta poistettiin haamupalikan osa
+        //checks that old ghost block was removed
         assertFalse(grid.getSquares()[7][18].isFull());
         assertFalse(grid.getSquares()[7][18].isFalling());
         assertSame(grid.getSquares()[7][18].getColor(), Color.BLACK);
@@ -240,7 +236,7 @@ class BlockTest {
         assertFalse(grid.getSquares()[8][17].isFalling());
         assertSame(grid.getSquares()[8][17].getColor(), Color.BLACK);
 
-        //varmistaa etta uuteen kohtaan tulee haamupalikka
+        //checks that the new ghost block was put correctly
         assertFalse(grid.getSquares()[8][18].isFull());
         assertFalse(grid.getSquares()[8][18].isFalling());
         assertSame(grid.getSquares()[8][19].getColor(), Color.GRAY);
@@ -250,11 +246,8 @@ class BlockTest {
         assertSame(grid.getSquares()[9][19].getColor(), Color.GRAY);
     }
 
-    /**
-     * testaa toimiiko palikan kaantaminen vastapaivaan ruudukolla
-     */
     @Test
-    public void kaannyVastapaivaanTesti() {
+    public void turnCounterClockWiseTest() {
         block = new TBlock(grid);
         block.setLocation(new int[]{7, 2});
 
@@ -270,11 +263,8 @@ class BlockTest {
         assertFalse(grid.getSquares()[7][1].isFull());
     }
 
-    /**
-     * testaa toimiiko palikan kaantaminen myotapaivaan ruudukolla
-     */
     @Test
-    public void kaannyMyotapaivaanTesti() {
+    public void turnClockWiseTest() {
         block = new TBlock(grid);
         block.setLocation(new int[]{7, 2});
 
@@ -290,35 +280,32 @@ class BlockTest {
         assertFalse(grid.getSquares()[9][1].isFull());
     }
 
-    /**
-     * testaa toimiiko palikan pudottaminen yhden ruudun ruudukolla
-     */
     @Test
-    public void pudotaYksiRuutuTesti() {
+    public void dropBlockByOneTest() {
         block = new OBlock(grid);
         block.dropByOneSquare();
 
-        //vanha palikan kohta
+        //old place
         assertFalse(grid.getSquares()[8][0].isFull());
         assertFalse(grid.getSquares()[8][0].isFalling());
         assertSame(grid.getSquares()[8][0].getColor(), Color.BLACK);
 
-        //vanha palikan kohta
+        //old place
         assertFalse(grid.getSquares()[9][0].isFull());
         assertFalse(grid.getSquares()[9][0].isFalling());
         assertSame(grid.getSquares()[9][0].getColor(), Color.BLACK);
 
-        //palikan uuden kohdan alla
+        //new place
         assertFalse(grid.getSquares()[8][3].isFull());
         assertFalse(grid.getSquares()[8][3].isFalling());
         assertSame(grid.getSquares()[8][3].getColor(), Color.BLACK);
 
-        //palikan pitaisi viela olla tassa kohdassa
+        //block should still be here
         assertTrue(grid.getSquares()[8][1].isFull());
         assertTrue(grid.getSquares()[8][1].isFalling());
         assertNotSame(grid.getSquares()[8][1].getColor(), Color.BLACK);
 
-        //palikan pitaisi nyt olla tassa kohdassa
+        //block should now be here
         assertTrue(grid.getSquares()[9][2].isFull());
         assertTrue(grid.getSquares()[9][2].isFalling());
         assertNotSame(grid.getSquares()[9][2].getColor(), Color.BLACK);
