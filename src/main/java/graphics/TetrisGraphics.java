@@ -207,16 +207,16 @@ public class TetrisGraphics extends Application {
                     try {
                         timer.stop();
                         gameOverMenu();
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
                     }
                 }
             } else if (pause) {
                 try {
                     timer.stop();
                     pauseMenu();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
                 pauseMenu();
             }
@@ -266,7 +266,7 @@ public class TetrisGraphics extends Application {
                     game.takeInput("left");
                     break;
                 case S:
-                    game.takeInput("bottom");
+                    game.takeInput("down");
                     break;
                 case D:
                     game.takeInput("right");
